@@ -2,11 +2,14 @@
 
 namespace PermutationCryptanalysis
 {
-	class Program
+	internal static class Program
 	{
-		static void Main(string[] args)
+		private static void Main()
 		{
-			
+			var machine = new Machine(5, 4);
+			machine.OutputStateMatrix();
+			Console.WriteLine();
+			machine.OutputOutputMatrix();
 		}
 	}
 }
