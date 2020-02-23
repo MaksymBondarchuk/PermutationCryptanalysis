@@ -5,40 +5,40 @@ namespace PermutationCryptanalysis
 {
 	public class Machine
 	{
-		private readonly int _m;
-		private readonly int _n;
-		private readonly int _initialState;
+		public int M { get; protected set; }
+		public int N { get; protected set; }
+		public int InitialState { get; protected set; }
 
-		private readonly List<List<int>> _stateMatrix = new List<List<int>>();
+		public readonly List<List<int>> StateMatrix = new List<List<int>>();
 
-		private readonly List<List<int>> _outputMatrix = new List<List<int>>();
+		public readonly List<List<int>> OutputMatrix = new List<List<int>>();
 
 		private readonly Random _random = new Random();
 
 		public Machine(int m, int n)
 		{
-			_m = m;
-			_n = n;
+			M = m;
+			N = n;
 
 			#region Generate
 
-			_initialState = _random.Next(_m);
+			InitialState = _random.Next(M);
 
-			for (int i = 0; i < _m; i++)
+			for (int i = 0; i < M; i++)
 			{
-				_stateMatrix.Add(new List<int>());
-				_outputMatrix.Add(new List<int>());
-				for (int j = 0; j < _n; j++)
+				StateMatrix.Add(new List<int>());
+				OutputMatrix.Add(new List<int>());
+				for (int j = 0; j < N; j++)
 				{
-					_stateMatrix[i].Add(_random.Next(_m));
+					StateMatrix[i].Add(_random.Next(M));
 				}
 
-				while (_outputMatrix[i].Count < _n)
+				while (OutputMatrix[i].Count < N)
 				{
-					int y = _random.Next(_n);
-					if (!_outputMatrix[i].Contains(y))
+					int y = _random.Next(N);
+					if (!OutputMatrix[i].Contains(y))
 					{
-						_outputMatrix[i].Add(y);
+						OutputMatrix[i].Add(y);
 					}
 				}
 			}
@@ -50,15 +50,15 @@ namespace PermutationCryptanalysis
 
 		public void OutputStateMatrix()
 		{
-			OutputMatrix(_stateMatrix);
+			OutputOneMatrix(StateMatrix);
 		}
 
 		public void OutputOutputMatrix()
 		{
-			OutputMatrix(_outputMatrix);
+			OutputOneMatrix(OutputMatrix);
 		}
 
-		private void OutputMatrix(List<List<int>> matrix)
+		private void OutputOneMatrix(List<List<int>> matrix)
 		{
 			foreach (List<int> row in matrix)
 			{

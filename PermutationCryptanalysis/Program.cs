@@ -6,10 +6,17 @@ namespace PermutationCryptanalysis
 	{
 		private static void Main()
 		{
-			var machine = new Machine(5, 4);
+			var machine = new Machine(4, 4);
 			machine.OutputStateMatrix();
 			Console.WriteLine();
 			machine.OutputOutputMatrix();
+			
+			Console.WriteLine("--");
+			
+			var reversedMachine = new ReversedMachine(machine);
+			reversedMachine.OutputStateMatrix();
+			Console.WriteLine();
+			reversedMachine.OutputOutputMatrix();
 		}
 	}
 }
