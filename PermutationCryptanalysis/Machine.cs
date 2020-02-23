@@ -48,23 +48,30 @@ namespace PermutationCryptanalysis
 
 		#region Output
 
-		public void OutputStateMatrix()
+		public void OutputStateMatrix(bool articleMode = false)
 		{
-			OutputOneMatrix(StateMatrix);
+			OutputOneMatrix(StateMatrix, articleMode);
 		}
 
-		public void OutputOutputMatrix()
+		public void OutputOutputMatrix(bool articleMode = false)
 		{
-			OutputOneMatrix(OutputMatrix);
+			OutputOneMatrix(OutputMatrix, articleMode);
 		}
 
-		private void OutputOneMatrix(List<List<int>> matrix)
+		private void OutputOneMatrix(List<List<int>> matrix, bool articleMode = false)
 		{
 			foreach (List<int> row in matrix)
 			{
 				foreach (int cell in row)
 				{
-					Console.Write($"{cell,4}");
+					if (articleMode)
+					{
+						Console.Write($"{cell + 1,4}");
+					}
+					else
+					{
+						Console.Write($"{cell,4}");
+					}
 				}
 
 				Console.WriteLine();
