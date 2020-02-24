@@ -46,6 +46,26 @@ namespace PermutationCryptanalysis
 			#endregion
 		}
 
+		#region Transform
+
+		public IEnumerable<int> Transform(IEnumerable<int> inputs)
+		{
+			var outputs = new List<int>();
+
+			int state = InitialState;
+
+			foreach (int input in inputs)
+			{
+				outputs.Add(GetOutput(state, input));
+
+				state = GetState(state, input);
+			}
+
+			return outputs;
+		}
+
+		#endregion
+
 		#region Output
 
 		public void OutputStateMatrix(bool articleMode = false)
@@ -79,5 +99,15 @@ namespace PermutationCryptanalysis
 		}
 
 		#endregion
+		
+		private int GetState(int state, int input)
+		{
+			return StateMatrix[state][input];
+		}
+
+		private int GetOutput(int state, int input)
+		{
+			return OutputMatrix[state][input];
+		}
 	}
 }
