@@ -20,10 +20,10 @@ namespace PermutationCryptanalysis
 				StateMatrix.Add(new List<int>());
 				OutputMatrix.Add(new List<int>());
 				
-				for (int j = 0; j < N; j++)
-				{
-					StateMatrix[i].Add(directMachine.StateMatrix[i][j]);
-				}
+				// for (int j = 0; j < N; j++)
+				// {
+				// 	StateMatrix[i].Add(directMachine.StateMatrix[i][j]);
+				// }
 
 				for (int j = 0; j < N; j++)
 				{
@@ -32,6 +32,8 @@ namespace PermutationCryptanalysis
 						if (directMachine.OutputMatrix[i][k] == j)
 						{
 							OutputMatrix[i].Add(k);
+							// StateMatrix[i].Add(k);
+							StateMatrix[i].Add(directMachine.StateMatrix[i][k]);
 							break;
 						}
 					}
