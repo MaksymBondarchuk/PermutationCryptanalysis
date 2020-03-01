@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace PermutationCryptanalysis
 {
@@ -8,17 +10,21 @@ namespace PermutationCryptanalysis
 		public int M { get; protected set; }
 		public int N { get; protected set; }
 		public int InitialState { get; protected set; }
+		
+		public int Bitness { get; }
 
 		public readonly List<List<int>> StateMatrix = new List<List<int>>();
 
-		public readonly List<List<int>> OutputMatrix = new List<List<int>>();
+		public readonly 
+		public readonly List<List<BitArray>> OutputMatrix = new List<List<BitArray>>();
 
 		private readonly Random _random = new Random();
 
-		public Machine(int m, int n)
+		public Machine(int m, int n, int bitness)
 		{
 			M = m;
 			N = n;
+			Bitness = bitness;
 
 			#region Generate
 
@@ -58,7 +64,7 @@ namespace PermutationCryptanalysis
 			for (int i = 0; i < M; i++)
 			{
 				StateMatrix.Add(new List<int>());
-				OutputMatrix.Add(new List<int>());
+				OutputMatrix.Add(new List<BitArray>());
 				for (int j = 0; j < N; j++)
 				{
 					StateMatrix[i].Add(_random.Next(M));
@@ -66,8 +72,8 @@ namespace PermutationCryptanalysis
 			
 				while (OutputMatrix[i].Count < N)
 				{
-					int y = _random.Next(N);
-					if (!OutputMatrix[i].Contains(y))
+					BitArray y = GenerateRandom();
+					if (!OutputMatrix[i].Any(o => o.ToString().Equals(y.ToString())))
 					{
 						OutputMatrix[i].Add(y);
 					}
@@ -79,13 +85,13 @@ namespace PermutationCryptanalysis
 
 		#region Transform
 
-		public IEnumerable<int> Transform(IEnumerable<int> inputs)
+		public IEnumerable<BitArray> Transform(IEnumerable<BitArray> inputs)
 		{
-			var outputs = new List<int>();
+			var outputs = new List<BitArray>();
 
 			int state = InitialState;
 
-			foreach (int input in inputs)
+			foreach (BitArray input in inputs)
 			{
 				outputs.Add(GetOutput(state, input));
 
@@ -129,16 +135,46 @@ namespace PermutationCryptanalysis
 			}
 		}
 
+		private void OutputOneMatrix(List<List<BitArray>> matrix, bool articleMode = false)
+		{
+			foreach (List<BitArray> row in matrix)
+			{
+				foreach (BitArray cell in row)
+				{
+					if (articleMode)
+					{
+						Console.Write($"{cell,4}");
+					}
+					else
+					{
+						Console.Write($"{cell,4}");
+					}
+				}
+
+				Console.WriteLine();
+			}
+		}
+
 		#endregion
 		
-		private int GetState(int state, int input)
+		private BitArray GetState(int state, BitArray input)
 		{
 			return StateMatrix[state][input];
 		}
 
-		private int GetOutput(int state, int input)
+		private BitArray GetOutput(int state, BitArray input)
 		{
 			return OutputMatrix[state][input];
+		}
+
+		private BitArray GenerateRandom()
+		{
+			var value = new bool[Bitness];
+			for (int b = 0; b < Bitness; b++)
+			{
+				value[b] = _random.NextDouble() < 0.5;
+			}
+			return new BitArray(value);
 		}
 	}
 }
