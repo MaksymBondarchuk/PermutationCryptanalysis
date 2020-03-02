@@ -9,6 +9,8 @@ namespace PermutationCryptanalysis
 		public int N { get; protected set; }
 		public int InitialState { get; protected set; }
 
+		private int State { get; set; }
+
 		public readonly List<List<int>> StateMatrix = new List<List<int>>();
 
 		public readonly List<List<int>> OutputMatrix = new List<List<int>>();
@@ -22,8 +24,9 @@ namespace PermutationCryptanalysis
 
 			#region Generate
 
-			InitialState = 1;
+			// InitialState = 1;
 			InitialState = _random.Next(M);
+			State = InitialState;
 			// StateMatrix = new List<List<int>>
 			// {
 			// 	new List<int>{0, 11, 4, 10, 3, 10, 4, 3},
@@ -54,7 +57,7 @@ namespace PermutationCryptanalysis
 			// 	new List<int>{5,2,1,0,4,3,7,6},
 			// 	new List<int>{5,1,6,0,2,7,4,3},
 			// };
-			
+
 			for (int i = 0; i < M; i++)
 			{
 				StateMatrix.Add(new List<int>());
@@ -63,7 +66,7 @@ namespace PermutationCryptanalysis
 				{
 					StateMatrix[i].Add(_random.Next(M));
 				}
-			
+
 				while (OutputMatrix[i].Count < N)
 				{
 					int y = _random.Next(N);
@@ -93,6 +96,20 @@ namespace PermutationCryptanalysis
 			}
 
 			return outputs;
+		}
+
+		public int TransformOne(int input)
+		{
+			int output = GetOutput(State, input);
+
+			State = GetState(State, input);
+
+			return output;
+		}
+
+		public void Reset()
+		{
+			State = InitialState;
 		}
 
 		#endregion
@@ -130,7 +147,7 @@ namespace PermutationCryptanalysis
 		}
 
 		#endregion
-		
+
 		private int GetState(int state, int input)
 		{
 			return StateMatrix[state][input];

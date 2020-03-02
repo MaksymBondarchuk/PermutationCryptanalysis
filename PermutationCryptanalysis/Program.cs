@@ -14,6 +14,13 @@ namespace PermutationCryptanalysis
 
 		private static void Main()
 		{
+			var a = new BitArray(new []{true, true, false, true, false});
+			a.Print(8);
+			Console.WriteLine(a.ToInt());
+			// Console.WriteLine(a.ToInt().ToBitArray());
+			a.ToInt().ToBitArray(a.Length).Print(8);
+			return;
+			
 			var machine = new Machine(m: M, n: N);
 			Console.WriteLine(machine.InitialState);
 			machine.OutputStateMatrix(ArticleMode);

@@ -22,5 +22,23 @@ namespace PermutationCryptanalysis.Extensions
 
 			return n;
 		}
+
+		public static void Print(this IEnumerable myList, int myWidth)
+		{
+			int i = myWidth;
+			foreach (object obj in myList)
+			{
+				if (i <= 0)
+				{
+					i = myWidth;
+					Console.WriteLine();
+				}
+
+				i--;
+				Console.Write("{0,8}", obj);
+			}
+
+			Console.WriteLine();
+		}
 	}
 }
