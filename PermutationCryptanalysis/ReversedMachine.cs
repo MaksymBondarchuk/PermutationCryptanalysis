@@ -12,15 +12,16 @@ namespace PermutationCryptanalysis
 			#region Generate
 
 			InitialState = directMachine.InitialState;
+			// State = InitialState;
 			
 			StateMatrix.Clear();
 			OutputMatrix.Clear();
 			for (int i = 0; i < M; i++)
 			{
-				StateMatrix.Add(new List<int>());
-				OutputMatrix.Add(new List<int>());
+				StateMatrix.Add(new List<byte>());
+				OutputMatrix.Add(new List<byte>());
 				
-				// for (int j = 0; j < N; j++)
+				// for (byte j = 0; j < N; j++)
 				// {
 				// 	StateMatrix[i].Add(directMachine.StateMatrix[i][j]);
 				// }
@@ -31,7 +32,7 @@ namespace PermutationCryptanalysis
 					{
 						if (directMachine.OutputMatrix[i][k] == j)
 						{
-							OutputMatrix[i].Add(k);
+							OutputMatrix[i].Add((byte)k);
 							// StateMatrix[i].Add(k);
 							StateMatrix[i].Add(directMachine.StateMatrix[i][k]);
 							break;
@@ -39,6 +40,8 @@ namespace PermutationCryptanalysis
 					}
 				}
 			}
+			
+			Reset();
 			
 			#endregion
 		}
