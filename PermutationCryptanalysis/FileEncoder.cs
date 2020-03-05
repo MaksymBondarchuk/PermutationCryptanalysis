@@ -17,18 +17,25 @@ namespace PermutationCryptanalysis
 
 			using var reader = new BinaryReader(File.Open(filename, FileMode.Open));
 			string result = $"{Path.Combine(Path.GetDirectoryName(filename), encodedFile)}-encoded{ext}";
+			string result1 = $"{Path.Combine(Path.GetDirectoryName(filename), encodedFile)}-decoded{ext}";
 			using var writerEncoded = new BinaryWriter(File.Open(result, FileMode.Create));
-			using var writerDecoded = new BinaryWriter(File.Open($"{encodedFile}-decoded{ext}", FileMode.Create));
+			using var writerDecoded = new BinaryWriter(File.Open(result1, FileMode.Create));
 
 			int counter = 0;
 
 			var stopwatch = new Stopwatch();
 			stopwatch.Start();
 			byte[] x = reader.ReadBytes(1);
+			long length = (reader.BaseStream.Length / 10) * 10;
+			long length10Percent = length / 10;
 			while (x.Length != 0)
 			{
 				counter++;
-				Console.WriteLine($"{Math.Floor(counter / (double) reader.BaseStream.Length * 100)}%");
+				if (counter % length10Percent == 0)
+				{
+					Console.Clear();
+					Console.WriteLine($"{counter * 100 / length}%");
+				}
 
 				byte y = machine.TransformOne(x.Single());
 				writerEncoded.Write(y);
@@ -38,8 +45,7 @@ namespace PermutationCryptanalysis
 
 				x = reader.ReadBytes(1);
 			}
-			
-			Console.Clear();
+
 			Console.WriteLine(stopwatch.Elapsed);
 			Console.WriteLine(result);
 		}
