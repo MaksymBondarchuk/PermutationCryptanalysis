@@ -12,7 +12,7 @@ namespace PermutationCryptanalysis
 
 		private static void Main()
 		{
-			FileEncoder.EncodeFile("C:\\Users\\maksym.bondarchuk\\Downloads\\P80226-084449.jpg");
+			FileEncoder.EncodeFileOptimized("C:\\Users\\maksym.bondarchuk\\Downloads\\IMG_3091.jpeg");
 			// FileEncoder.EncodeFile("data.txt");
 			return;
 

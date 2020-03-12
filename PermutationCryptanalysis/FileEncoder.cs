@@ -49,5 +49,40 @@ namespace PermutationCryptanalysis
 			Console.WriteLine(stopwatch.Elapsed);
 			Console.WriteLine(result);
 		}
+
+		public static void EncodeFileOptimized(string filename)
+		{
+			var machine = new Machine(byte.MaxValue + 1, byte.MaxValue + 1);
+			var reversedMachine = new ReversedMachine(machine);
+
+			string? encodedFile = Path.GetFileNameWithoutExtension(filename);
+			string? ext = Path.GetExtension(filename);
+
+			using var reader = new BinaryReader(File.Open(filename, FileMode.Open));
+			string encodedName = $"{Path.Combine(Path.GetDirectoryName(filename), encodedFile)}-encoded{ext}";
+			string decodedName = $"{Path.Combine(Path.GetDirectoryName(filename), encodedFile)}-decoded{ext}";
+			// using var writerEncoded = new BinaryWriter(File.Open(encodedName, FileMode.Create));
+			// using var writerDecoded = new BinaryWriter(File.Open(decodedName, FileMode.Create));
+
+			var stopwatch = new Stopwatch();
+			stopwatch.Start();
+
+			byte[] inputs = File.ReadAllBytes(filename);
+			var outputs = new byte[inputs.Length];
+			var decoded = new byte[inputs.Length];
+			for (int i = 0; i < inputs.Length; i++)
+			{
+				byte x = inputs[i];
+				byte y = machine.TransformOne(x);
+				byte xReverted = reversedMachine.TransformOne(y);
+				outputs[i] = y;
+				decoded[i] = xReverted;
+			}
+
+			File.WriteAllBytes(encodedName, outputs);
+			File.WriteAllBytes(decodedName, decoded);
+			Console.WriteLine(stopwatch.Elapsed);
+			Console.WriteLine(encodedName);
+		}
 	}
 }
