@@ -76,17 +76,28 @@ namespace PermutationCryptanalysis
 			{
 				StateMatrix.Add(new List<int>());
 				OutputMatrix.Add(new List<int>());
-				for (var j = 0; j < N; j++)
+			}
+
+			for (var j = 0; j < N; j++)
+			{
+				for (var i = 0; i < M; i++)
 				{
-					StateMatrix[i].Add(_random.Next(M));
+					OutputMatrix[i].Add(_random.Next(N));
 				}
-			
-				while (OutputMatrix[i].Count < N)
+			}
+
+			for (var j = 0; j < N; j++)
+			{
+				var i = 0;
+				int leftToAdd = M;
+				while (leftToAdd != 0)
 				{
-					int y = _random.Next(N);
-					if (!OutputMatrix[i].Contains(y))
+					int s = _random.Next(M);
+					if (StateMatrix.All(row => row.Count <= j || row[j] != s))
 					{
-						OutputMatrix[i].Add(y);
+						StateMatrix[i].Add(s);
+						i++;
+						leftToAdd--;
 					}
 				}
 			}
