@@ -7,9 +7,9 @@ namespace PermutationCryptanalysis
 	internal static class Program
 	{
 		private const bool ArticleMode = false;
-		private const int M = 12;
-		private const int N = 8;
-		
+		private const int M = 4;
+		private const int N = 4;
+
 		private static void Main()
 		{
 			var machine = new Machine(m: M, n: N);
@@ -17,6 +17,7 @@ namespace PermutationCryptanalysis
 			machine.OutputStateMatrix(ArticleMode);
 			Console.WriteLine();
 			machine.OutputOutputMatrix(ArticleMode);
+			Console.WriteLine(machine.EnsurePermutation(4, 4));
 
 			// Console.WriteLine("--");
 			//
