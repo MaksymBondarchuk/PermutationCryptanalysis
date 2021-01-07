@@ -15,7 +15,7 @@ namespace PermutationCryptanalysis
 			
 			StateMatrix.Clear();
 			OutputMatrix.Clear();
-			for (int i = 0; i < M; i++)
+			for (var i = 0; i < M; i++)
 			{
 				StateMatrix.Add(new List<int>());
 				OutputMatrix.Add(new List<int>());
@@ -25,9 +25,9 @@ namespace PermutationCryptanalysis
 				// 	StateMatrix[i].Add(directMachine.StateMatrix[i][j]);
 				// }
 
-				for (int j = 0; j < N; j++)
+				for (var j = 0; j < N; j++)
 				{
-					for (int k = 0; k < N; k++)
+					for (var k = 0; k < N; k++)
 					{
 						if (directMachine.OutputMatrix[i][k] == j)
 						{

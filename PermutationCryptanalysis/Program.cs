@@ -7,8 +7,8 @@ namespace PermutationCryptanalysis
 	internal static class Program
 	{
 		private const bool ArticleMode = true;
-		private const int M = 12;
-		private const int N = 8;
+		private const int M = 4;
+		private const int N = 4;
 		
 		private static void Main()
 		{
@@ -17,21 +17,22 @@ namespace PermutationCryptanalysis
 			machine.OutputStateMatrix(ArticleMode);
 			Console.WriteLine();
 			machine.OutputOutputMatrix(ArticleMode);
-
+			
+			// Console.WriteLine(machine.EnsurePermutation(2, 4));
 			Console.WriteLine("--");
-
+			
 			var reversedMachine = new ReversedMachine(machine);
 			Console.WriteLine(reversedMachine.InitialState);
 			reversedMachine.OutputStateMatrix(ArticleMode);
 			Console.WriteLine();
 			reversedMachine.OutputOutputMatrix(ArticleMode);
-
+			
 			Console.WriteLine("--");
 			// var inputs = new List<int> {0, 1, 2, 3};
 			var rnd = new Random();
 			var inputs = new List<int>();
-			var count = rnd.Next(35);
-			for (int i = 0; i < count; i++)
+			int count = rnd.Next(35);
+			for (var i = 0; i < count; i++)
 			{
 				inputs.Add(rnd.Next(N));
 			}

@@ -1,19 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace PermutationCryptanalysis
 {
 	public class Machine
 	{
-		public int M { get; protected set; }
-		public int N { get; protected set; }
-		public int InitialState { get; protected set; }
+		public int M { get; protected init; }
+		public int N { get; protected init; }
+		public int InitialState { get; protected init; }
 
-		public readonly List<List<int>> StateMatrix = new List<List<int>>();
+		public readonly List<List<int>> StateMatrix = new();
 
-		public readonly List<List<int>> OutputMatrix = new List<List<int>>();
+		public readonly List<List<int>> OutputMatrix = new();
 
-		private readonly Random _random = new Random();
+		private readonly Random _random = new();
 
 		public Machine(int m, int n)
 		{
@@ -22,11 +23,11 @@ namespace PermutationCryptanalysis
 
 			#region Generate
 
-			InitialState = 1;
+			// InitialState = 0;
 			InitialState = _random.Next(M);
 			// StateMatrix = new List<List<int>>
 			// {
-			// 	new List<int>{0, 11, 4, 10, 3, 10, 4, 3},
+			// 	new List<int>{0, 0, 4, 10, 3, 10, 4, 3},
 			// 	new List<int>{6, 10,3,3,7,11,7,2},
 			// 	new List<int>{9,11,0,6,9,4,8,5},
 			// 	new List<int>{5,6,0,4,7,7,9,6},
@@ -54,12 +55,28 @@ namespace PermutationCryptanalysis
 			// 	new List<int>{5,2,1,0,4,3,7,6},
 			// 	new List<int>{5,1,6,0,2,7,4,3},
 			// };
-			
-			for (int i = 0; i < M; i++)
+
+			// InitialState = 0;
+			// StateMatrix = new List<List<int>>
+			// {
+			// 	new List<int> {0, 1, 2, 3},
+			// 	new List<int> {3, 0, 1, 2},
+			// 	new List<int> {2, 3, 0, 1},
+			// 	new List<int> {1, 2, 3, 0}
+			// };;
+			// OutputMatrix = new List<List<int>>
+			// {
+			// 	new List<int> {0, 1, 2, 3},
+			// 	new List<int> {3, 0, 1, 2},
+			// 	new List<int> {2, 3, 0, 1},
+			// 	new List<int> {1, 2, 3, 0}
+			// };
+
+			for (var i = 0; i < M; i++)
 			{
 				StateMatrix.Add(new List<int>());
 				OutputMatrix.Add(new List<int>());
-				for (int j = 0; j < N; j++)
+				for (var j = 0; j < N; j++)
 				{
 					StateMatrix[i].Add(_random.Next(M));
 				}
@@ -130,7 +147,75 @@ namespace PermutationCryptanalysis
 		}
 
 		#endregion
+
+		#region Ensure Permutation
+
+		public bool EnsurePermutation(int messageSizeFrom, int messageSizeTo)
+		{
+			for (int messageSize = messageSizeFrom; messageSize <= messageSizeTo; messageSize++)
+			{
+				var outputs = new List<List<int>>();
+
+				List<int> inputs = GenerateFirstMessage();
+				while (CanBeIncremented(inputs))
+				{
+					PrintList(inputs);
+					
+					List<int> current = Transform(inputs).ToList();
+					
+					if (outputs.Any(output => current.SequenceEqual(output)))
+					{
+						return false;
+					}
+					
+					outputs.Add(current);
+					IncrementMessage(inputs);
+				}
+			}
+
+			return true;
+		}
+
+		private List<int> GenerateFirstMessage()
+		{
+			var inputs = new List<int>();
+			for (var i = 0; i < N; i++)
+			{
+				inputs.Add(0);
+			}
+			return inputs;
+		}
+
+		private bool CanBeIncremented(List<int> inputs)
+		{
+			return inputs.All(x => x < N);
+		}
+
+		private void IncrementMessage(List<int> inputs)
+		{
+			inputs[^1]++;
+			for (int i = inputs.Count - 1; 0 < i; i--)
+			{
+				if (inputs[i] == N)
+				{
+					inputs[i] = 0;
+					inputs[i - 1]++;
+				}
+			}
+		}
 		
+		private static void PrintList(IEnumerable<int> list)
+		{
+			foreach (int i in list)
+			{
+				Console.Write($"{i,4}");
+			}
+
+			Console.WriteLine();
+		}
+
+		#endregion
+
 		private int GetState(int state, int input)
 		{
 			return StateMatrix[state][input];
