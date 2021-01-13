@@ -1,18 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+using PermutationCryptanalysis.Algorithms;
 
 namespace PermutationCryptanalysis
 {
 	internal static class Program
 	{
 		private const bool ArticleMode = false;
-		private const int M = 4;
-		private const int N = 4;
+		private const int M = 12;
+		private const int N = 8;
 
 		private static void Main()
 		{
-			var machine = new Machine(m: M, n: N);
+			var machine = new Machine(new HaitArticleAlgorithm(), m: M, n: N);
 			Console.WriteLine(machine.InitialState);
 			machine.OutputStateMatrix(ArticleMode);
 			Console.WriteLine();
