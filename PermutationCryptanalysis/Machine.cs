@@ -8,9 +8,11 @@ namespace PermutationCryptanalysis
 	public class Machine
 	{
 		public int M { get; protected init; }
+		
 		public int N { get; protected init; }
 		
-		public IAlgorithm Algorithm { get; protected init; }
+		public IAlgorithm Algorithm { get; }
+		
 		public int InitialState { get; protected init; }
 
 		public readonly List<List<int>> StateMatrix;
@@ -87,9 +89,9 @@ namespace PermutationCryptanalysis
 
 		#endregion
 
-		#region Ensure Permutation
+		#region Ensure Bijectivness
 
-		public bool EnsurePermutation(int messageSizeFrom, int messageSizeTo)
+		public bool IsBijective(int messageSizeFrom, int messageSizeTo)
 		{
 			for (int messageSize = messageSizeFrom; messageSize <= messageSizeTo; messageSize++)
 			{
@@ -98,7 +100,7 @@ namespace PermutationCryptanalysis
 				List<int> inputs = GenerateFirstMessage();
 				while (CanBeIncremented(inputs))
 				{
-					PrintList(inputs);
+					// PrintList(inputs);
 					
 					List<int> current = Transform(inputs).ToList();
 					

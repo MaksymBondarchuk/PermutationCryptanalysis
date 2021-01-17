@@ -16,7 +16,7 @@ namespace PermutationCryptanalysis
 			machine.OutputStateMatrix(ArticleMode);
 			Console.WriteLine();
 			machine.OutputOutputMatrix(ArticleMode);
-			Console.WriteLine(machine.EnsurePermutation(4, 4));
+			Console.WriteLine(machine.IsBijective(4, 4));
 
 			// Console.WriteLine("--");
 			//
