@@ -56,6 +56,11 @@ namespace PermutationCryptanalysis.Machine
 			return output;
 		}
 
+		public void Reset()
+		{
+			State = InitialState;
+		}
+		
 		#endregion
 
 		#region Output
