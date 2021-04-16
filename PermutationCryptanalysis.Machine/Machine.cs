@@ -1,19 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using PermutationCryptanalysis.Algorithms;
+using PermutationCryptanalysis.Machine.Algorithms;
 
-namespace PermutationCryptanalysis
+namespace PermutationCryptanalysis.Machine
 {
 	public class Machine
 	{
+		#region Setup
+
 		public int M { get; protected init; }
-		
+
 		public int N { get; protected init; }
-		
+
 		public IAlgorithm Algorithm { get; }
-		
+
 		public int InitialState { get; protected init; }
+
+		private int State { get; set; }
 
 		public readonly List<List<int>> StateMatrix;
 
@@ -29,28 +33,27 @@ namespace PermutationCryptanalysis
 			Algorithm = algorithm;
 
 			InitialState = algorithm.GetInitialState(m);
+			State = InitialState;
 			StateMatrix = algorithm.GenerateStateMatrix(m, n);
 			OutputMatrix = algorithm.GenerateOutputMatrix(m, n);
 
 			#endregion
 		}
 
+		#endregion
+
 		#region Transform
 
 		public IEnumerable<int> Transform(IEnumerable<int> inputs)
 		{
-			var outputs = new List<int>();
+			return inputs.Select(Transform).ToList();
+		}
 
-			int state = InitialState;
-
-			foreach (int input in inputs)
-			{
-				outputs.Add(GetOutput(state, input));
-
-				state = GetState(state, input);
-			}
-
-			return outputs;
+		public int Transform(int input)
+		{
+			int output = GetOutput(State, input);
+			State = GetState(State, input);
+			return output;
 		}
 
 		#endregion
@@ -101,14 +104,14 @@ namespace PermutationCryptanalysis
 				while (CanBeIncremented(inputs))
 				{
 					// PrintList(inputs);
-					
+
 					List<int> current = Transform(inputs).ToList();
-					
+
 					if (outputs.Any(output => current.SequenceEqual(output)))
 					{
 						return false;
 					}
-					
+
 					outputs.Add(current);
 					IncrementMessage(inputs);
 				}
@@ -124,6 +127,7 @@ namespace PermutationCryptanalysis
 			{
 				inputs.Add(0);
 			}
+
 			return inputs;
 		}
 
@@ -144,7 +148,7 @@ namespace PermutationCryptanalysis
 				}
 			}
 		}
-		
+
 		private static void PrintList(IEnumerable<int> list)
 		{
 			foreach (int i in list)

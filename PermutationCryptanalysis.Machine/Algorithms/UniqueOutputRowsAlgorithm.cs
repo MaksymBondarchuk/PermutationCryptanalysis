@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace PermutationCryptanalysis.Algorithms
+namespace PermutationCryptanalysis.Machine.Algorithms
 {
 	public class UniqueOutputRowsAlgorithm : IAlgorithm
 	{
