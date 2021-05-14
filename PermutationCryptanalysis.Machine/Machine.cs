@@ -46,7 +46,18 @@ namespace PermutationCryptanalysis.Machine
 
 		public IEnumerable<int> Transform(IEnumerable<int> inputs)
 		{
-			return inputs.Select(Transform).ToList();
+			var outputs = new List<int>();
+
+			int state = InitialState;
+
+			foreach (int input in inputs)
+			{
+				outputs.Add(GetOutput(state, input));
+
+				state = GetState(state, input);
+			}
+
+			return outputs;
 		}
 
 		public int Transform(int input)
@@ -60,40 +71,6 @@ namespace PermutationCryptanalysis.Machine
 		{
 			State = InitialState;
 		}
-		
-		#endregion
-
-		#region Output
-
-		public void OutputStateMatrix(bool articleMode = false)
-		{
-			OutputOneMatrix(StateMatrix, articleMode);
-		}
-
-		public void OutputOutputMatrix(bool articleMode = false)
-		{
-			OutputOneMatrix(OutputMatrix, articleMode);
-		}
-
-		private void OutputOneMatrix(List<List<int>> matrix, bool articleMode = false)
-		{
-			foreach (List<int> row in matrix)
-			{
-				foreach (int cell in row)
-				{
-					if (articleMode)
-					{
-						Console.Write($"{cell + 1,4}");
-					}
-					else
-					{
-						Console.Write($"{cell,4}");
-					}
-				}
-
-				Console.WriteLine();
-			}
-		}
 
 		#endregion
 
@@ -105,12 +82,19 @@ namespace PermutationCryptanalysis.Machine
 			{
 				var outputs = new List<List<int>>();
 
-				List<int> inputs = GenerateFirstMessage();
+				List<int> inputs = GenerateFirstMessage(messageSize);
+				Reset();
 				while (CanBeIncremented(inputs))
 				{
 					// PrintList(inputs);
 
 					List<int> current = Transform(inputs).ToList();
+					// List<int> current2 = inputs.Select(Transform).ToList();
+
+					// if (!current.SequenceEqual(current2))
+					// {
+					// Debugger.Break();
+					// }
 
 					if (outputs.Any(output => current.SequenceEqual(output)))
 					{
@@ -119,16 +103,17 @@ namespace PermutationCryptanalysis.Machine
 
 					outputs.Add(current);
 					IncrementMessage(inputs);
+					Reset();
 				}
 			}
 
 			return true;
 		}
 
-		private List<int> GenerateFirstMessage()
+		private List<int> GenerateFirstMessage(int messageSize)
 		{
 			var inputs = new List<int>();
-			for (var i = 0; i < N; i++)
+			for (var i = 0; i < messageSize; i++)
 			{
 				inputs.Add(0);
 			}
@@ -152,16 +137,6 @@ namespace PermutationCryptanalysis.Machine
 					inputs[i - 1]++;
 				}
 			}
-		}
-
-		private static void PrintList(IEnumerable<int> list)
-		{
-			foreach (int i in list)
-			{
-				Console.Write($"{i,4}");
-			}
-
-			Console.WriteLine();
 		}
 
 		#endregion
