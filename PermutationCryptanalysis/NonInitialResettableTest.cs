@@ -2,7 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using PermutationCryptanalysis.Machine;
-using PermutationCryptanalysis.Machine.Algorithms;
+using PermutationCryptanalysis.Machine.Algorithms.InitialState;
+using PermutationCryptanalysis.Machine.Algorithms.Outputs;
+using PermutationCryptanalysis.Machine.Algorithms.States;
 
 namespace PermutationCryptanalysis
 {
@@ -10,11 +12,11 @@ namespace PermutationCryptanalysis
 	{
 		public void Run(int m, int n, bool articleMode)
 		{
-			var machine = new Machine.Machine(new UniqueOutputRowsAlgorithm(), m, n);
+			var machine = new Machine.Machine(new RandomInitialStateAlgorithm(), new UniqueOutputRowsAlgorithm(), new ConnectedGraphStateAlgorithm(), m, n);
 			machine.WriteMachine();
 
 			List<List<int>> outputTable = HackOutputTable(machine, m, n);
-			
+
 			Console.WriteLine();
 			MachineWriter.WriteOneMatrix(outputTable, "Hacked Output Table");
 		}
@@ -31,20 +33,23 @@ namespace PermutationCryptanalysis
 				}
 			}
 
-			outputTable[0] = HackFirstRow(machine, m, n);
-			for (var j = 0; j < n; j++)
+			outputTable[0] = HackFirstOutputRow(machine, m, n);
+			for (var input = 0; input < n; input++)
 			{
-				for (var i = 0; i < m; i++)
+				var tableForOneInput = new List<List<int>>();
+				tableForOneInput.Add(outputTable[0]);
+				for (var state = 1; state < m; state++)
 				{
-					
+					tableForOneInput.Add(GetOneOutputRow(machine, m, n, input, state));
 				}
-				HackOutputTableColumn(machine, m, n, j);
+				MachineWriter.WriteOneMatrix(tableForOneInput, $"Input={input}");
+				// HackOutputTableColumn(machine, m, n, j);
 			}
 
 			return outputTable;
 		}
 
-		private List<int> HackFirstRow(Machine.Machine machine, int m, int n)
+		private List<int> HackFirstOutputRow(Machine.Machine machine, int m, int n)
 		{
 			var firstRow = new List<int>();
 			for (var i = 0; i < n; i++)
@@ -54,6 +59,23 @@ namespace PermutationCryptanalysis
 			}
 
 			return firstRow;
+		}
+
+		private List<int> GetOneOutputRow(Machine.Machine machine, int m, int n, int input, int count)
+		{
+			var row = new List<int>();
+			for (var i = 0; i < n; i++)
+			{
+				for (var j = 0; j < count; j++)
+				{
+					machine.Transform(input);
+				}
+
+				row.Add(machine.Transform(i));
+				machine.Reset();
+			}
+
+			return row;
 		}
 
 		private void HackOutputTableColumn(Machine.Machine machine, int m, int n, int columnIndex)

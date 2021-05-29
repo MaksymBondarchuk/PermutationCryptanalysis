@@ -2,9 +2,10 @@
 
 namespace PermutationCryptanalysis.Machine
 {
-	public class ReversedMachine: Machine
+	public class ReversedMachine : Machine
 	{
-		public ReversedMachine(Machine directMachine) : base(directMachine.Algorithm, directMachine.M, directMachine.N)
+		public ReversedMachine(Machine directMachine) : base(directMachine.InitialStateAlgorithm, directMachine.OutputMatrixAlgorithm, directMachine.StateMatrixAlgorithm,
+			directMachine.M, directMachine.N)
 		{
 			M = directMachine.M;
 			N = directMachine.N;
@@ -12,7 +13,7 @@ namespace PermutationCryptanalysis.Machine
 			#region Generate
 
 			InitialState = directMachine.InitialState;
-			
+
 			StateMatrix.Clear();
 			OutputMatrix.Clear();
 			for (var i = 0; i < M; i++)
@@ -33,7 +34,7 @@ namespace PermutationCryptanalysis.Machine
 					}
 				}
 			}
-			
+
 			#endregion
 		}
 	}

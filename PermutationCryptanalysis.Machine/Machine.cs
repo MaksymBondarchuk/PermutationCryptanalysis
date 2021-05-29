@@ -1,7 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using PermutationCryptanalysis.Machine.Algorithms;
+using PermutationCryptanalysis.Machine.Algorithms.InitialState;
+using PermutationCryptanalysis.Machine.Algorithms.Outputs;
+using PermutationCryptanalysis.Machine.Algorithms.States;
 
 namespace PermutationCryptanalysis.Machine
 {
@@ -13,7 +14,11 @@ namespace PermutationCryptanalysis.Machine
 
 		public int N { get; protected init; }
 
-		public IAlgorithm Algorithm { get; }
+		public IInitialStateAlgorithm InitialStateAlgorithm { get; }
+		
+		public IOutputMatrixAlgorithm OutputMatrixAlgorithm { get; }
+		
+		public IStateMatrixAlgorithm StateMatrixAlgorithm { get; }
 
 		public int InitialState { get; protected init; }
 
@@ -23,19 +28,21 @@ namespace PermutationCryptanalysis.Machine
 
 		public readonly List<List<int>> OutputMatrix;
 
-		public Machine(IAlgorithm algorithm, int m, int n)
+		public Machine(IInitialStateAlgorithm initialStateAlgorithm, IOutputMatrixAlgorithm outputMatrixAlgorithm, IStateMatrixAlgorithm stateMatrixAlgorithm, int m, int n)
 		{
 			M = m;
 			N = n;
 
 			#region Generate
 
-			Algorithm = algorithm;
+			InitialStateAlgorithm = initialStateAlgorithm;
+			OutputMatrixAlgorithm = outputMatrixAlgorithm;
+			StateMatrixAlgorithm = stateMatrixAlgorithm;
 
-			InitialState = algorithm.GetInitialState(m);
+			InitialState = initialStateAlgorithm.GetInitialState(m);
 			State = InitialState;
-			StateMatrix = algorithm.GenerateStateMatrix(m, n);
-			OutputMatrix = algorithm.GenerateOutputMatrix(m, n);
+			OutputMatrix = outputMatrixAlgorithm.GenerateOutputMatrix(m, n);
+			StateMatrix = stateMatrixAlgorithm.GenerateStateMatrix(m, n);
 
 			#endregion
 		}

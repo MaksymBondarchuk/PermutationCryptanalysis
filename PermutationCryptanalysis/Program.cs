@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using PermutationCryptanalysis.Machine;
-using PermutationCryptanalysis.Machine.Algorithms;
-
-namespace PermutationCryptanalysis
+﻿namespace PermutationCryptanalysis
 {
 	internal static class Program
 	{

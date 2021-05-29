@@ -1,9 +1,12 @@
 using System;
 using System.Collections.Generic;
+using PermutationCryptanalysis.Machine.Algorithms.InitialState;
+using PermutationCryptanalysis.Machine.Algorithms.Outputs;
+using PermutationCryptanalysis.Machine.Algorithms.States;
 
 namespace PermutationCryptanalysis.Machine.Algorithms
 {
-	public class HaitArticleAlgorithm : IAlgorithm
+	public class HaitArticleAlgorithm : IInitialStateAlgorithm, IOutputMatrixAlgorithm, IStateMatrixAlgorithm
 	{
 		public int GetInitialState(int m)
 		{

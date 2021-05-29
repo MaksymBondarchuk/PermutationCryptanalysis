@@ -2,7 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using PermutationCryptanalysis.Machine;
-using PermutationCryptanalysis.Machine.Algorithms;
+using PermutationCryptanalysis.Machine.Algorithms.InitialState;
+using PermutationCryptanalysis.Machine.Algorithms.Outputs;
+using PermutationCryptanalysis.Machine.Algorithms.States;
 
 namespace PermutationCryptanalysis
 {
@@ -10,7 +12,7 @@ namespace PermutationCryptanalysis
 	{
 		public void Run(int m, int n, bool articleMode)
 		{
-			var machine = new Machine.Machine(new UniqueOutputRowsAlgorithm(), m, n);
+			var machine = new Machine.Machine(new RandomInitialStateAlgorithm(), new UniqueOutputRowsAlgorithm(), new ConnectedGraphStateAlgorithm(), m, n);
 			machine.WriteMachine();
 
 			List<List<int>> outputTable = HackOutputTable(machine, m, n);

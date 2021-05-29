@@ -1,32 +1,11 @@
 using System;
 using System.Collections.Generic;
 
-namespace PermutationCryptanalysis.Machine.Algorithms
+namespace PermutationCryptanalysis.Machine.Algorithms.Outputs
 {
-	public class UniqueOutputRowsAlgorithm : IAlgorithm
+	public class RandomOutputAlgorithm : IOutputMatrixAlgorithm
 	{
 		private readonly Random _random = new();
-
-		public int GetInitialState(int m)
-		{
-			return _random.Next(m);
-		}
-
-		public List<List<int>> GenerateStateMatrix(int m, int n)
-		{
-			var stateMatrix = new List<List<int>>();
-
-			for (var i = 0; i < m; i++)
-			{
-				stateMatrix.Add(new List<int>());
-				for (var j = 0; j < n; j++)
-				{
-					stateMatrix[i].Add(_random.Next(m));
-				}
-			}
-
-			return stateMatrix;
-		}
 
 		public List<List<int>> GenerateOutputMatrix(int m, int n)
 		{
