@@ -23,6 +23,8 @@ namespace PermutationCryptanalysis
 
 		private List<List<int>> HackOutputTable(Machine.Machine machine, int m, int n)
 		{
+			#region Init with -1
+
 			var outputTable = new List<List<int>>();
 			for (var i = 0; i < m; i++)
 			{
@@ -33,15 +35,17 @@ namespace PermutationCryptanalysis
 				}
 			}
 
+			#endregion
+
 			outputTable[0] = HackFirstOutputRow(machine, m, n);
 			for (var input = 0; input < n; input++)
 			{
-				var tableForOneInput = new List<List<int>>();
-				tableForOneInput.Add(outputTable[0]);
+				var tableForOneInput = new List<List<int>> {outputTable[0]};
 				for (var state = 1; state < m; state++)
 				{
 					tableForOneInput.Add(GetOneOutputRow(machine, m, n, input, state));
 				}
+
 				MachineWriter.WriteOneMatrix(tableForOneInput, $"Input={input}");
 				// HackOutputTableColumn(machine, m, n, j);
 			}
