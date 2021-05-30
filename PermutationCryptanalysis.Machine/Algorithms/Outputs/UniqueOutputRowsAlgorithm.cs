@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace PermutationCryptanalysis.Machine.Algorithms.Outputs
 {
@@ -13,16 +14,16 @@ namespace PermutationCryptanalysis.Machine.Algorithms.Outputs
 
 			for (var i = 0; i < m; i++)
 			{
-				outputMatrix.Add(new List<int>());
-
-				while (outputMatrix[i].Count < n)
+				var row = new List<int>();
+				while (row.Count < n && !outputMatrix.Any(r => r.SequenceEqual(row)))
 				{
 					int y = _random.Next(n);
-					if (!outputMatrix[i].Contains(y))
+					if (!row.Contains(y))
 					{
-						outputMatrix[i].Add(y);
+						row.Add(y);
 					}
 				}
+				outputMatrix.Add(row);
 			}
 
 			return outputMatrix;
