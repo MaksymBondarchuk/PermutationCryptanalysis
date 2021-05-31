@@ -1,12 +1,27 @@
+#nullable enable
+
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
+using PermutationCryptanalysis.Machine.Extensions;
 
 namespace PermutationCryptanalysis.Machine.Algorithms.States
 {
 	public class ConnectedGraphStateAlgorithm : IStateMatrixAlgorithm
 	{
+		#region Setup
+
 		private readonly Random _random = new();
+
+		private readonly List<List<int>>? _existing;
+
+		public ConnectedGraphStateAlgorithm(List<List<int>>? existing = null)
+		{
+			_existing = existing;
+		}
+
+		#endregion
 
 		public List<List<int>> GenerateStateMatrix(int m, int n)
 		{
@@ -18,7 +33,7 @@ namespace PermutationCryptanalysis.Machine.Algorithms.States
 			{
 				stateMatrix.Clear();
 				paths.Clear();
-				
+
 				// Set Initial State (relative) as starting point
 				for (var j = 0; j < n; j++)
 				{
@@ -30,37 +45,33 @@ namespace PermutationCryptanalysis.Machine.Algorithms.States
 				{
 					stateMatrix.Add(new List<int>());
 
-					List<List<int>> pathForPreviousState = DuplicatePaths(paths);
+					List<List<int>> pathForPreviousState = paths.Clone();
 
 					paths = new List<List<int>>();
 					for (var j = 0; j < n; j++)
 					{
-						int state = _random.Next(m);
+						int state = _existing?[i][j] ?? _random.Next(m);
 						stateMatrix[i].Add(state);
 
-						List<List<int>> pathForThisState = DuplicatePaths(pathForPreviousState);
+						List<List<int>> pathForThisState = pathForPreviousState.Where(p => p.Last() == i).ToList().Clone();
 						foreach (List<int> path in pathForThisState)
 						{
 							path.Add(state);
+							if (path.Count == 3 && path[0] == 0 && path[1] == 2 && path[2] == 1)
+							{
+								Debugger.Break();
+							}
 						}
+
 						paths.AddRange(pathForThisState);
 					}
 				}
 			}
 
-			return stateMatrix;
-		}
+			List<int> pathWithAllNodes = paths.First(p => p.Distinct().Count() == m && p.First() == p.Last());
+			Console.WriteLine($"Path with all nodes: {pathWithAllNodes.ToHumanReadableString()}");
 
-		private static List<List<T>> DuplicatePaths<T>(List<List<T>> paths)
-		{
-			if (paths == null)
-			{
-				throw new ArgumentNullException(nameof(paths));
-			}
-			
-			var duplicate = new List<List<T>>(paths.Count);
-			duplicate.AddRange(paths.Select(path => new List<T>(path)));
-			return duplicate;
+			return stateMatrix;
 		}
 	}
 }
