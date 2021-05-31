@@ -11,6 +11,8 @@ namespace PermutationCryptanalysis
 {
 	public class NonInitialResettableTest
 	{
+		private readonly Dictionary<List<int>, List<int>> _cache = new();
+		
 		public void Run(int m, int n, bool articleMode)
 		{
 			var outputMatrix = new List<List<int>>
@@ -149,6 +151,14 @@ namespace PermutationCryptanalysis
 
 		private List<int> GetOneOutputRow(Machine.Machine machine, int m, int n, List<int> path)
 		{
+			foreach (var (cachedPath, cachedOutputRow) in _cache)
+			{
+				if (cachedPath.SequenceEqual(path))
+				{
+					return cachedOutputRow;
+				}
+			}
+			
 			var row = new List<int>();
 			for (var i = 0; i < n; i++)
 			{
@@ -160,6 +170,8 @@ namespace PermutationCryptanalysis
 				row.Add(machine.Transform(i));
 				machine.Reset();
 			}
+			
+			_cache.Add(path, row);
 
 			return row;
 		}
