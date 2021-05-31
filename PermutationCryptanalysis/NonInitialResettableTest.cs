@@ -30,14 +30,6 @@ namespace PermutationCryptanalysis
 			var machine = new Machine.Machine(new RandomInitialStateAlgorithm(), new UniqueOutputRowsAlgorithm(), new ConnectedGraphStateAlgorithm(), m, n);
 			machine.WriteMachine();
 
-			List<List<int>> outputTable = HackOutputTable(machine, m, n);
-
-			Console.WriteLine();
-			MachineWriter.WriteOneMatrix(outputTable, "Hacked Output Table");
-		}
-
-		private List<List<int>> HackOutputTable(Machine.Machine machine, int m, int n)
-		{
 			#region Init with -1
 
 			var outputTable = new List<List<int>>();
@@ -111,7 +103,8 @@ namespace PermutationCryptanalysis
 				throw new Exception($"Cannot get all states");
 			}
 
-			return outputTable;
+			var hacked = new Machine.Machine(0, outputTable, stateTable, m, n);
+			Console.WriteLine($"Is machines equivalent? {hacked.IsEquivalentTo(machine, 4, 4)}");
 		}
 
 		private List<int> HackFirstOutputRow(Machine.Machine machine, int m, int n)

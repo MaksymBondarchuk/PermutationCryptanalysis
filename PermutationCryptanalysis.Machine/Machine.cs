@@ -24,9 +24,9 @@ namespace PermutationCryptanalysis.Machine
 
 		private int State { get; set; }
 
-		public readonly List<List<int>> StateMatrix;
-
 		public readonly List<List<int>> OutputMatrix;
+
+		public readonly List<List<int>> StateMatrix;
 
 		public Machine(IInitialStateAlgorithm initialStateAlgorithm, IOutputMatrixAlgorithm outputMatrixAlgorithm, IStateMatrixAlgorithm stateMatrixAlgorithm, int m, int n)
 		{
@@ -43,6 +43,21 @@ namespace PermutationCryptanalysis.Machine
 			State = InitialState;
 			OutputMatrix = outputMatrixAlgorithm.GenerateOutputMatrix(m, n);
 			StateMatrix = stateMatrixAlgorithm.GenerateStateMatrix(m, n);
+
+			#endregion
+		}
+
+		public Machine(int initialState, List<List<int>> outputMatrix, List<List<int>> stateMatrix, int m, int n)
+		{
+			M = m;
+			N = n;
+
+			#region Generate
+
+			InitialState = initialState;
+			State = InitialState;
+			OutputMatrix = outputMatrix;
+			StateMatrix = stateMatrix;
 
 			#endregion
 		}
@@ -93,15 +108,7 @@ namespace PermutationCryptanalysis.Machine
 				Reset();
 				while (CanBeIncremented(inputs))
 				{
-					// PrintList(inputs);
-
 					List<int> current = Transform(inputs).ToList();
-					// List<int> current2 = inputs.Select(Transform).ToList();
-
-					// if (!current.SequenceEqual(current2))
-					// {
-					// Debugger.Break();
-					// }
 
 					if (outputs.Any(output => current.SequenceEqual(output)))
 					{
@@ -147,6 +154,32 @@ namespace PermutationCryptanalysis.Machine
 		}
 
 		#endregion
+		
+		public bool IsEquivalentTo(Machine other, int messageSizeFrom, int messageSizeTo)
+		{
+			for (int messageSize = messageSizeFrom; messageSize <= messageSizeTo; messageSize++)
+			{
+				List<int> inputs = GenerateFirstMessage(messageSize);
+				Reset();
+				other.Reset();
+				while (CanBeIncremented(inputs))
+				{
+					List<int> thisOutput = Transform(inputs).ToList();
+					List<int> otherOutput = other.Transform(inputs).ToList();
+
+					if (!thisOutput.SequenceEqual(otherOutput))
+					{
+						return false;
+					}
+					
+					IncrementMessage(inputs);
+					Reset();
+					other.Reset();
+				}
+			}
+
+			return true;
+		}
 
 		private int GetState(int state, int input)
 		{
