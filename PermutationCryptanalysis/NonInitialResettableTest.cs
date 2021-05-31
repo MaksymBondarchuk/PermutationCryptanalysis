@@ -29,6 +29,7 @@ namespace PermutationCryptanalysis
 			};
 			var machine = new Machine.Machine(new RandomInitialStateAlgorithm(), new UniqueOutputRowsAlgorithm(), new ConnectedGraphStateAlgorithm(), m, n);
 			machine.WriteMachine();
+			machine.ResetCounter();
 
 			#region Init with -1
 
@@ -105,6 +106,7 @@ namespace PermutationCryptanalysis
 
 			var hacked = new Machine.Machine(0, outputTable, stateTable, m, n);
 			Console.WriteLine($"Is machines equivalent? {hacked.IsEquivalentTo(machine, 4, 4)}");
+			Console.WriteLine($"Done in {machine.OperationsCounter} operations");
 		}
 
 		private List<int> HackFirstOutputRow(Machine.Machine machine, int m, int n)

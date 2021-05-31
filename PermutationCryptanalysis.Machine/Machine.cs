@@ -15,9 +15,9 @@ namespace PermutationCryptanalysis.Machine
 		public int N { get; protected init; }
 
 		public IInitialStateAlgorithm InitialStateAlgorithm { get; }
-		
+
 		public IOutputMatrixAlgorithm OutputMatrixAlgorithm { get; }
-		
+
 		public IStateMatrixAlgorithm StateMatrixAlgorithm { get; }
 
 		public int InitialState { get; protected init; }
@@ -27,6 +27,8 @@ namespace PermutationCryptanalysis.Machine
 		public readonly List<List<int>> OutputMatrix;
 
 		public readonly List<List<int>> StateMatrix;
+
+		public int OperationsCounter { get; private set; } = 0;
 
 		public Machine(IInitialStateAlgorithm initialStateAlgorithm, IOutputMatrixAlgorithm outputMatrixAlgorithm, IStateMatrixAlgorithm stateMatrixAlgorithm, int m, int n)
 		{
@@ -74,6 +76,7 @@ namespace PermutationCryptanalysis.Machine
 
 			foreach (int input in inputs)
 			{
+				OperationsCounter++;
 				outputs.Add(GetOutput(state, input));
 
 				state = GetState(state, input);
@@ -84,6 +87,7 @@ namespace PermutationCryptanalysis.Machine
 
 		public int Transform(int input)
 		{
+			OperationsCounter++;
 			int output = GetOutput(State, input);
 			State = GetState(State, input);
 			return output;
@@ -94,9 +98,14 @@ namespace PermutationCryptanalysis.Machine
 			State = InitialState;
 		}
 
+		public void ResetCounter()
+		{
+			OperationsCounter = 0;
+		}
+
 		#endregion
 
-		#region Ensure Bijectivness
+		#region Bijectivness
 
 		public bool IsBijective(int messageSizeFrom, int messageSizeTo)
 		{
@@ -154,7 +163,9 @@ namespace PermutationCryptanalysis.Machine
 		}
 
 		#endregion
-		
+
+		#region Equivalence
+
 		public bool IsEquivalentTo(Machine other, int messageSizeFrom, int messageSizeTo)
 		{
 			for (int messageSize = messageSizeFrom; messageSize <= messageSizeTo; messageSize++)
@@ -171,7 +182,7 @@ namespace PermutationCryptanalysis.Machine
 					{
 						return false;
 					}
-					
+
 					IncrementMessage(inputs);
 					Reset();
 					other.Reset();
@@ -180,6 +191,8 @@ namespace PermutationCryptanalysis.Machine
 
 			return true;
 		}
+
+		#endregion
 
 		private int GetState(int state, int input)
 		{
