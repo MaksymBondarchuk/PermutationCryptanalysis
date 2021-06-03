@@ -6,6 +6,7 @@ using PermutationCryptanalysis.Machine.Algorithms.InitialState;
 using PermutationCryptanalysis.Machine.Algorithms.Outputs;
 using PermutationCryptanalysis.Machine.Algorithms.States;
 using PermutationCryptanalysis.Machine.Extensions;
+using PermutationCryptanalysis.Machine.Interfaces;
 
 namespace PermutationCryptanalysis
 {
@@ -13,25 +14,9 @@ namespace PermutationCryptanalysis
 	{
 		private readonly Dictionary<List<int>, List<int>> _cache = new();
 		
-		public void Run(int m, int n, bool articleMode)
+		public void Run(int m, int n)
 		{
-			var outputMatrix = new List<List<int>>
-			{
-				new() {0, 3, 1, 2},
-				new() {1, 3, 0, 2},
-				new() {0, 2, 3, 1},
-				new() {2, 0, 3, 1}
-			};
-			var stateMatrix = new List<List<int>>
-			{
-				new() {1, 1, 2, 3},
-				new() {3, 3, 1, 2},
-				new() {0, 3, 0, 1},
-				new() {3, 0, 3, 0}
-			};
-			var machine = new Machine.Machine(new RandomInitialStateAlgorithm(), new UniqueOutputRowsAlgorithm(), new ConnectedGraphStateAlgorithm(), m, n);
-			machine.WriteMachine();
-			machine.ResetCounter();
+			IResettableMachine machine = GetMachine(m, n);
 
 			#region Init with -1
 
@@ -72,28 +57,6 @@ namespace PermutationCryptanalysis
 				}
 			}
 
-			#region Commented
-
-			// var resultsForAllInputs = new Dictionary<int, List<List<int>>>(n);
-			// for (var input = 0; input < n; input++)
-			// {
-			// 	var tableForOneInput = new List<List<int>> {outputTable[0]};
-			// 	for (var state = 1; state < m; state++)
-			// 	{
-			// 		tableForOneInput.Add(GetOneOutputRow(machine, m, n, input, state));
-			// 	}
-			//
-			// 	resultsForAllInputs.Add(input, tableForOneInput);
-			// 	MachineWriter.WriteOneMatrix(tableForOneInput, $"Input={input}");
-			// 	// HackOutputTableColumn(machine, m, n, j);
-			// }
-			//
-			// List<List<int>> uniqueOutputs = resultsForAllInputs.SelectMany(t => t.Value).ToList().SequenceDistinct().ToList();
-			// MachineWriter.WriteOneMatrix(uniqueOutputs, $"Unique outputs");
-			// MachineWriter.WriteOneMatrix(resultsForAllInputs.SelectMany(t => t.Value).ToList(), $"All outputs");
-
-			#endregion
-
 			MachineWriter.WriteOneMatrix(outputTable, "Output matrix");
 			MachineWriter.WriteOneMatrix(stateTable, "State matrix");
 			if (outputTable.Count != m)
@@ -107,11 +70,34 @@ namespace PermutationCryptanalysis
 			}
 
 			var hacked = new Machine.Machine(0, outputTable, stateTable, m, n);
-			Console.WriteLine($"Is machines equivalent? {hacked.IsEquivalentTo(machine, 4, 4)}");
 			Console.WriteLine($"Done in {machine.OperationsCounter} operations");
+			Console.WriteLine($"Is machines equivalent? {hacked.IsEquivalentTo(machine, 4, 4)}");
 		}
 
-		private List<int> HackFirstOutputRow(Machine.Machine machine, int m, int n)
+		private IResettableMachine GetMachine(int m, int n)
+		{
+			
+			var outputMatrix = new List<List<int>>
+			{
+				new() {0, 3, 1, 2},
+				new() {1, 3, 0, 2},
+				new() {0, 2, 3, 1},
+				new() {2, 0, 3, 1}
+			};
+			var stateMatrix = new List<List<int>>
+			{
+				new() {1, 1, 2, 3},
+				new() {3, 3, 1, 2},
+				new() {0, 3, 0, 1},
+				new() {3, 0, 3, 0}
+			};
+			var machine = new Machine.Machine(new RandomInitialStateAlgorithm(), new UniqueOutputRowsAlgorithm(), new ConnectedGraphStateAlgorithm(), m, n);
+			machine.WriteMachine();
+			machine.ResetCounter();
+			return machine;
+		}
+
+		private List<int> HackFirstOutputRow(IResettableMachine machine, int m, int n)
 		{
 			var firstRow = new List<int>();
 			for (var i = 0; i < n; i++)
@@ -132,7 +118,7 @@ namespace PermutationCryptanalysis
 		/// <param name="input"></param>
 		/// <param name="offset">Offset from initial state</param>
 		/// <returns></returns>
-		private List<int> GetOneOutputRow(Machine.Machine machine, int m, int n, int input, int offset)
+		private List<int> GetOneOutputRow(IResettableMachine machine, int m, int n, int input, int offset)
 		{
 			var row = new List<int>();
 			for (var i = 0; i < n; i++)
@@ -149,7 +135,7 @@ namespace PermutationCryptanalysis
 			return row;
 		}
 
-		private List<int> GetOneOutputRow(Machine.Machine machine, int m, int n, List<int> path)
+		private List<int> GetOneOutputRow(IResettableMachine machine, int m, int n, List<int> path)
 		{
 			foreach (var (cachedPath, cachedOutputRow) in _cache)
 			{
