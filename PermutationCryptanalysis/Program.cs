@@ -15,8 +15,16 @@
 			// machine.OutputOutputMatrix(ArticleMode);
 			// Console.WriteLine(machine.IsBijective(4, 4));
 
-			var test = new NonInitialResettableTest();
-			test.Run(M, N);
+			{
+				var test = new NonInitialResettableTest();
+				test.Run(M, N);
+			}
+
+			{
+				var test = new InitialResettableTest();
+				test.Run(M, N);
+			}
+
 
 			// var inputs = new List<int> {0, 1, 2, 3};
 			// List<int>? outputsDirect = machine.Transform(inputs).ToList();

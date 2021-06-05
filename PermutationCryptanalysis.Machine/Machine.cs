@@ -7,7 +7,7 @@ using PermutationCryptanalysis.Machine.Interfaces;
 
 namespace PermutationCryptanalysis.Machine
 {
-	public class Machine: IInitialMachine, IResettableMachine
+	public class Machine: IInitialResettableMachine
 	{
 		#region Setup
 
@@ -29,7 +29,7 @@ namespace PermutationCryptanalysis.Machine
 
 		public readonly List<List<int>> StateMatrix;
 
-		public int OperationsCounter { get; private set; } = 0;
+		public int OperationsCounter { get; private set; }
 
 		public Machine(IInitialStateAlgorithm initialStateAlgorithm, IOutputMatrixAlgorithm outputMatrixAlgorithm, IStateMatrixAlgorithm stateMatrixAlgorithm, int m, int n)
 		{
