@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using PermutationCryptanalysis.Machine;
 using PermutationCryptanalysis.Machine.Algorithms.InitialState;
 using PermutationCryptanalysis.Machine.Algorithms.Outputs;
 using PermutationCryptanalysis.Machine.Algorithms.States;

@@ -11,8 +11,6 @@ namespace PermutationCryptanalysis
 {
 	public class InitialResettableTest
 	{
-		private readonly Dictionary<List<int>, List<int>> _cache = new();
-
 		public void Run(int m, int n)
 		{
 			IInitialResettableMachine machine = GetMachine(m, n);
