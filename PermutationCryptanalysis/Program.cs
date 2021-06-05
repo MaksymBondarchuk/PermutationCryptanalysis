@@ -3,7 +3,7 @@
 	internal static class Program
 	{
 		private const bool ArticleMode = false;
-		private const int M = 4;
+		private const int M = 6;
 		private const int N = 4;
 
 		private static void Main()
@@ -15,8 +15,16 @@
 			// machine.OutputOutputMatrix(ArticleMode);
 			// Console.WriteLine(machine.IsBijective(4, 4));
 
-			var test = new NonInitialResettableTest();
-			test.Run(M, N, ArticleMode);
+			{
+				var test = new NonInitialResettableTest();
+				test.Run(M, N);
+			}
+
+			{
+				var test = new InitialResettableTest();
+				test.Run(M, N);
+			}
+
 
 			// var inputs = new List<int> {0, 1, 2, 3};
 			// List<int>? outputsDirect = machine.Transform(inputs).ToList();

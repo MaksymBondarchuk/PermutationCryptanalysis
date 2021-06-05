@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace PermutationCryptanalysis.Machine
+namespace PermutationCryptanalysis.Machine.Extensions
 {
 	public static class MachineWriter
 	{

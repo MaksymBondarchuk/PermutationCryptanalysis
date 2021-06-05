@@ -5,6 +5,7 @@ using PermutationCryptanalysis.Machine;
 using PermutationCryptanalysis.Machine.Algorithms.InitialState;
 using PermutationCryptanalysis.Machine.Algorithms.Outputs;
 using PermutationCryptanalysis.Machine.Algorithms.States;
+using PermutationCryptanalysis.Machine.Extensions;
 
 namespace PermutationCryptanalysis
 {

@@ -8,7 +8,8 @@ namespace PermutationCryptanalysis.Machine.Algorithms.InitialState
 
 		public int GetInitialState(int m)
 		{
-			return 0;//_random.Next(m);
+			// return 0;
+			return _random.Next(m);
 		}
 	}
 }

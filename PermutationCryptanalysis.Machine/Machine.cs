@@ -3,10 +3,11 @@ using System.Linq;
 using PermutationCryptanalysis.Machine.Algorithms.InitialState;
 using PermutationCryptanalysis.Machine.Algorithms.Outputs;
 using PermutationCryptanalysis.Machine.Algorithms.States;
+using PermutationCryptanalysis.Machine.Interfaces;
 
 namespace PermutationCryptanalysis.Machine
 {
-	public class Machine
+	public class Machine: IInitialResettableMachine
 	{
 		#region Setup
 
@@ -28,7 +29,7 @@ namespace PermutationCryptanalysis.Machine
 
 		public readonly List<List<int>> StateMatrix;
 
-		public int OperationsCounter { get; private set; } = 0;
+		public int OperationsCounter { get; private set; }
 
 		public Machine(IInitialStateAlgorithm initialStateAlgorithm, IOutputMatrixAlgorithm outputMatrixAlgorithm, IStateMatrixAlgorithm stateMatrixAlgorithm, int m, int n)
 		{
@@ -96,6 +97,11 @@ namespace PermutationCryptanalysis.Machine
 		public void Reset()
 		{
 			State = InitialState;
+		}
+
+		public void SetState(int state)
+		{
+			State = state;
 		}
 
 		public void ResetCounter()
@@ -166,7 +172,7 @@ namespace PermutationCryptanalysis.Machine
 
 		#region Equivalence
 
-		public bool IsEquivalentTo(Machine other, int messageSizeFrom, int messageSizeTo)
+		public bool IsEquivalentTo(IResettableMachine other, int messageSizeFrom, int messageSizeTo)
 		{
 			for (int messageSize = messageSizeFrom; messageSize <= messageSizeTo; messageSize++)
 			{
