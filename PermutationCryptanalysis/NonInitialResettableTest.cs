@@ -23,11 +23,9 @@ namespace PermutationCryptanalysis
 			var stateTable = new List<List<int>>();
 			for (var i = 0; i < m; i++)
 			{
-				// outputTable.Add(new List<int>());
 				stateTable.Add(new List<int>());
 				for (var j = 0; j < n; j++)
 				{
-					// outputTable[i].Add(-1);
 					stateTable[i].Add(-1);
 				}
 			}
