@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
+using PermutationCryptanalysis.Calculators;
 using PermutationCryptanalysis.Machine.Algorithms.InitialState;
 using PermutationCryptanalysis.Machine.Algorithms.Outputs;
 using PermutationCryptanalysis.Machine.Algorithms.States;
@@ -12,7 +14,7 @@ namespace PermutationCryptanalysis
 	public class NonInitialResettableTest
 	{
 		private readonly Dictionary<List<int>, List<int>> _cache = new();
-		
+
 		public void Run(int m, int n)
 		{
 			IResettableMachine machine = GetMachine(m, n);
@@ -33,7 +35,7 @@ namespace PermutationCryptanalysis
 			#endregion
 
 			outputTable.AddDistinct(HackFirstOutputRow(machine, n));
-			for (List<int> path = PathHelper.GetFirstPath(m, n); PathHelper.CanIncrement(path, n); path = PathHelper.Increment(path, n))
+			for (List<int> path = PathHelper.GetFirstPath(m, n); PathHelper.BetweenFirstAndFinalOrFinal(path, n); path = PathHelper.Increment(path, n))
 			{
 				var state = 0;
 				for (var i = 1; i <= path.Count; i++)
@@ -46,14 +48,15 @@ namespace PermutationCryptanalysis
 					int input = thisPath.Last();
 					if (stateTable[state][input] != -1 && stateTable[state][input] != newState)
 					{
-						throw new Exception($"Something went wrong for a path '{path.ToHumanReadableString()}' and local path '{thisPath.ToHumanReadableString()}'");
+						throw new Exception(
+							$"Something went wrong for a path '{path.ToHumanReadableString()}' and local path '{thisPath.ToHumanReadableString()}'");
 					}
 
 					stateTable[state][input] = newState;
 					state = newState;
 				}
 			}
-			
+
 			if (outputTable.Count != m)
 			{
 				MachineWriter.WriteOneMatrix(outputTable, "Output matrix");
@@ -71,12 +74,13 @@ namespace PermutationCryptanalysis
 			var hacked = new Machine.Machine(0, outputTable, stateTable, m, n);
 			hacked.WriteMachine();
 			Console.WriteLine($"Done in {machine.OperationsCounter} operations");
+			Console.WriteLine($"Should have been done in {CalculateComplexity(m, n)} operations");
+			// Console.WriteLine($"Subpaths count {_cache.Count}");
 			Console.WriteLine($"Are machines equivalent? {hacked.IsEquivalentTo(machine, 4, 4)}");
 		}
 
 		private IResettableMachine GetMachine(int m, int n)
 		{
-			
 			// var outputMatrix = new List<List<int>>
 			// {
 			// 	new() {0, 3, 1, 2},
@@ -118,7 +122,7 @@ namespace PermutationCryptanalysis
 					return cachedOutputRow;
 				}
 			}
-			
+
 			var row = new List<int>();
 			for (var i = 0; i < n; i++)
 			{
@@ -130,10 +134,21 @@ namespace PermutationCryptanalysis
 				row.Add(machine.Transform(i));
 				machine.Reset();
 			}
-			
+
 			_cache.Add(path, row);
 
 			return row;
+		}
+
+		private static long CalculateComplexity(int m, int n)
+		{
+			long sumI = 0;
+			for (var i = 1; i <= m; i++)
+			{
+				sumI += (i + 2) * MainCalculator.Pow(n, i);
+			}
+
+			return 2 * n + n * sumI;
 		}
 	}
 }

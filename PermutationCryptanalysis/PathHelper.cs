@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using PermutationCryptanalysis.Machine.Extensions;
 
 namespace PermutationCryptanalysis
@@ -24,10 +23,19 @@ namespace PermutationCryptanalysis
 			return path.Any(state => state < n - 1);
 		}
 
+		public static bool BetweenFirstAndFinalOrFinal(List<int> path, int n)
+		{
+			return path.Any(state => state < n - 1) || path.All(state => state == n - 1);
+		}
+
 		public static List<int> Increment(List<int> path, int n)
 		{
 			var newPath = new List<int>(path);
 			newPath[^1]++;
+			if (!CanIncrement(path, n))
+			{
+				return newPath;
+			}
 			for (int i = newPath.Count - 1; 0 <= i; i--)
 			{
 				if (newPath[i] == n)

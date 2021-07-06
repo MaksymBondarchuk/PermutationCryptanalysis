@@ -96,11 +96,13 @@ namespace PermutationCryptanalysis.Machine
 
 		public void Reset()
 		{
+			OperationsCounter++;
 			State = InitialState;
 		}
 
 		public void SetState(int state)
 		{
+			OperationsCounter++;
 			State = state;
 		}
 

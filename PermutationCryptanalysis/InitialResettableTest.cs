@@ -37,6 +37,7 @@ namespace PermutationCryptanalysis
 			hacked.WriteMachine();
 			
 			Console.WriteLine($"Done in {machine.OperationsCounter} operations");
+			Console.WriteLine($"Should have been done in {2 * m * n + 3 * m * n * n + 2 * n} operations");
 			Console.WriteLine($"Are machines equivalent? {hacked.IsEquivalentTo(machine, 4, 4)}");
 		}
 
