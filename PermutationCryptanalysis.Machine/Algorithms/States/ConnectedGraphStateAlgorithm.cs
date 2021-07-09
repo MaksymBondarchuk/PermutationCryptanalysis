@@ -2,7 +2,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using PermutationCryptanalysis.Machine.Extensions;
 
@@ -53,14 +52,11 @@ namespace PermutationCryptanalysis.Machine.Algorithms.States
 						int state = _existing?[i][j] ?? _random.Next(m);
 						stateMatrix[i].Add(state);
 
+						// All paths that end in this state. Clone them and add new generated state to each of them
 						List<List<int>> pathForThisState = pathForPreviousState.Where(p => p.Last() == i).ToList().Clone();
 						foreach (List<int> path in pathForThisState)
 						{
 							path.Add(state);
-							if (path.Count == 3 && path[0] == 0 && path[1] == 2 && path[2] == 1)
-							{
-								Debugger.Break();
-							}
 						}
 
 						paths.AddRange(pathForThisState);
