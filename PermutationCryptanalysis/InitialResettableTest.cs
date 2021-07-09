@@ -35,9 +35,9 @@ namespace PermutationCryptanalysis
 
 			var hacked = new Machine.Machine(initialState, outputTable, stateTable, m, n);
 			hacked.WriteMachine();
-			
+
 			Console.WriteLine($"Done in {machine.OperationsCounter} operations");
-			Console.WriteLine($"Should have been done in {2 * m * n + 3 * m * n * n + 2 * n} operations");
+			Console.WriteLine($"Should have been done in {CalculateComplexity(m, n)} operations");
 			Console.WriteLine($"Are machines equivalent? {hacked.IsEquivalentTo(machine, 4, 4)}");
 		}
 
@@ -96,7 +96,7 @@ namespace PermutationCryptanalysis
 
 			return table;
 		}
-		
+
 		private List<int> HackStateTableRow(IInitialResettableMachine machine, List<List<int>> outputTable, int state, int n)
 		{
 			var row = new List<int>();
@@ -109,13 +109,14 @@ namespace PermutationCryptanalysis
 					machine.Transform(input);
 					outputRowForInput.Add(machine.Transform(i));
 				}
+
 				int newState = outputTable.SequenceIndexOf(outputRowForInput);
 				row.Add(newState);
 			}
 
 			return row;
 		}
-		
+
 		private int HackInitialState(IInitialResettableMachine machine, List<List<int>> outputTable, int n)
 		{
 			var row = new List<int>();
@@ -126,6 +127,11 @@ namespace PermutationCryptanalysis
 			}
 
 			return outputTable.SequenceIndexOf(row);
+		}
+
+		public static long CalculateComplexity(int m, int n)
+		{
+			return 2 * m * n + 3 * m * n * n + 2 * n;
 		}
 	}
 }

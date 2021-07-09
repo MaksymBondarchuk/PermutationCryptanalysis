@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
+using System.Numerics;
 using PermutationCryptanalysis.Calculators;
 using PermutationCryptanalysis.Machine.Algorithms.InitialState;
 using PermutationCryptanalysis.Machine.Algorithms.Outputs;
@@ -140,12 +140,23 @@ namespace PermutationCryptanalysis
 			return row;
 		}
 
-		private static long CalculateComplexity(int m, int n)
+		public static long CalculateComplexity(int m, int n)
 		{
 			long sumI = 0;
 			for (var i = 1; i <= m; i++)
 			{
 				sumI += (i + 2) * MainCalculator.Pow(n, i);
+			}
+
+			return 2 * n + n * sumI;
+		}
+
+		public static BigInteger CalculateComplexityBig(int m, int n)
+		{
+			BigInteger sumI = 0;
+			for (var i = 1; i <= m; i++)
+			{
+				sumI += (i + 2) * MainBigCalculator.Pow(n, i);
 			}
 
 			return 2 * n + n * sumI;
