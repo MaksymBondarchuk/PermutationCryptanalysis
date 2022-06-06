@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace PermutationCryptanalysis.Machine.Algorithms.States
+namespace PermutationCryptanalysis.Machines.Algorithms.States
 {
 	public class UniqueStateColumnsAlgorithm : IStateMatrixAlgorithm
 	{

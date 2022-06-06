@@ -2,9 +2,13 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PermutationCryptanalysis", "PermutationCryptanalysis\PermutationCryptanalysis.csproj", "{510901DA-CF39-429D-AF92-105D13005BC4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PermutationCryptanalysis.Machine", "PermutationCryptanalysis.Machine\PermutationCryptanalysis.Machine.csproj", "{C209769C-9152-4C1F-8BB6-29830C34F874}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PermutationCryptanalysis.Machines", "PermutationCryptanalysis.Machines\PermutationCryptanalysis.Machines.csproj", "{C209769C-9152-4C1F-8BB6-29830C34F874}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PermutationCryptanalysis.ComplexitiesTableBuilder", "PermutationCryptanalysis.ComplexitiesTableBuilder\PermutationCryptanalysis.ComplexitiesTableBuilder.csproj", "{DC8F10E6-6CED-4850-8C4A-2B0547A1D4E6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PermutationCryptanalysis.Helpers", "PermutationCryptanalysis.Helpers\PermutationCryptanalysis.Helpers.csproj", "{963DBB50-C457-42D2-A316-E6A37850390F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PermutationCryptanalysis.Tests", "PermutationCryptanalysis.Tests\PermutationCryptanalysis.Tests.csproj", "{37DD5E17-359E-4D08-997D-FCC9DE6A9CE3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -24,5 +28,13 @@ Global
 		{DC8F10E6-6CED-4850-8C4A-2B0547A1D4E6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DC8F10E6-6CED-4850-8C4A-2B0547A1D4E6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DC8F10E6-6CED-4850-8C4A-2B0547A1D4E6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{963DBB50-C457-42D2-A316-E6A37850390F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{963DBB50-C457-42D2-A316-E6A37850390F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{963DBB50-C457-42D2-A316-E6A37850390F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{963DBB50-C457-42D2-A316-E6A37850390F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{37DD5E17-359E-4D08-997D-FCC9DE6A9CE3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{37DD5E17-359E-4D08-997D-FCC9DE6A9CE3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{37DD5E17-359E-4D08-997D-FCC9DE6A9CE3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{37DD5E17-359E-4D08-997D-FCC9DE6A9CE3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

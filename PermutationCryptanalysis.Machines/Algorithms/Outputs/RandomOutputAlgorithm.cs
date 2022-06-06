@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace PermutationCryptanalysis.Machine.Algorithms.Outputs
+namespace PermutationCryptanalysis.Machines.Algorithms.Outputs
 {
 	public class RandomOutputAlgorithm : IOutputMatrixAlgorithm
 	{

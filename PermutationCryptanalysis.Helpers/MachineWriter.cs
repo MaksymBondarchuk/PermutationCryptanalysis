@@ -1,8 +1,6 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
+using PermutationCryptanalysis.Machines;
 
-namespace PermutationCryptanalysis.Machine.Extensions
+namespace PermutationCryptanalysis.Helpers
 {
 	public static class MachineWriter
 	{
@@ -15,17 +13,17 @@ namespace PermutationCryptanalysis.Machine.Extensions
 			Console.WriteLine($"Is machine bijective? {machine.IsBijective(4, 4)}");
 		}
 
-		public static void WriteStateMatrix(this Machine machine, string title = null, bool articleMode = false)
+		public static void WriteStateMatrix(this Machine machine, string? title = null, bool articleMode = false)
 		{
 			WriteOneMatrix(machine.StateMatrix, title, articleMode);
 		}
 
-		public static void WriteOutputMatrix(this Machine machine, string title = null, bool articleMode = false)
+		public static void WriteOutputMatrix(this Machine machine, string? title = null, bool articleMode = false)
 		{
 			WriteOneMatrix(machine.OutputMatrix, title, articleMode);
 		}
 
-		public static void WriteOneMatrix(List<List<int>> matrix, string title = null, bool articleMode = false)
+		public static void WriteOneMatrix(List<List<int>> matrix, string? title = null, bool articleMode = false)
 		{
 			if (!string.IsNullOrWhiteSpace(title))
 			{

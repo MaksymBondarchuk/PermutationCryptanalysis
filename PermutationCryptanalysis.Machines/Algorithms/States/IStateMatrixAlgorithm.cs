@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace PermutationCryptanalysis.Machine.Algorithms.States
+namespace PermutationCryptanalysis.Machines.Algorithms.States
 {
 	public interface IStateMatrixAlgorithm
 	{

@@ -1,4 +1,4 @@
-namespace PermutationCryptanalysis.Machine.Interfaces
+namespace PermutationCryptanalysis.Machines.Interfaces
 {
 	public interface IInitialMachine: IMachine
 	{

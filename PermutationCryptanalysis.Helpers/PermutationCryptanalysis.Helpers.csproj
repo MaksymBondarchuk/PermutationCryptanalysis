@@ -1,14 +1,14 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<OutputType>Exe</OutputType>
 		<TargetFramework>net6.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
 		<LangVersion>default</LangVersion>
 	</PropertyGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\PermutationCryptanalysis\PermutationCryptanalysis.csproj" />
+	  <ProjectReference Include="..\PermutationCryptanalysis.Machines\PermutationCryptanalysis.Machines.csproj" />
 	</ItemGroup>
 
 </Project>

@@ -1,11 +1,13 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using PermutationCryptanalysis.Machine.Algorithms.InitialState;
-using PermutationCryptanalysis.Machine.Algorithms.Outputs;
-using PermutationCryptanalysis.Machine.Algorithms.States;
-using PermutationCryptanalysis.Machine.Extensions;
-using PermutationCryptanalysis.Machine.Interfaces;
+using PermutationCryptanalysis.Helpers;
+using PermutationCryptanalysis.Machines;
+using PermutationCryptanalysis.Machines.Algorithms.InitialState;
+using PermutationCryptanalysis.Machines.Algorithms.Outputs;
+using PermutationCryptanalysis.Machines.Algorithms.States;
+using PermutationCryptanalysis.Machines.Extensions;
+using PermutationCryptanalysis.Machines.Interfaces;
 
 namespace PermutationCryptanalysis
 {
@@ -33,7 +35,7 @@ namespace PermutationCryptanalysis
 				throw new Exception("Cannot get all states");
 			}
 
-			var hacked = new Machine.Machine(initialState, outputTable, stateTable, m, n);
+			var hacked = new Machine(initialState, outputTable, stateTable, m, n);
 			hacked.WriteMachine();
 
 			Console.WriteLine($"Done in {machine.OperationsCounter} operations");
@@ -57,7 +59,7 @@ namespace PermutationCryptanalysis
 			// 	new() {0, 3, 0, 1},
 			// 	new() {3, 0, 3, 0}
 			// };
-			var machine = new Machine.Machine(new RandomInitialStateAlgorithm(), new UniqueOutputRowsAlgorithm(), new ConnectedGraphStateAlgorithm(), m, n);
+			var machine = new Machine(new RandomInitialStateAlgorithm(), new UniqueOutputRowsAlgorithm(), new ConnectedGraphStateAlgorithm(), m, n);
 			machine.WriteMachine();
 			machine.ResetCounter();
 			return machine;

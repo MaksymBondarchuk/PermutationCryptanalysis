@@ -3,9 +3,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using PermutationCryptanalysis.Machine.Extensions;
+using PermutationCryptanalysis.Machines.Extensions;
 
-namespace PermutationCryptanalysis.Machine.Algorithms.States
+namespace PermutationCryptanalysis.Machines.Algorithms.States
 {
 	public class ConnectedGraphStateAlgorithm : IStateMatrixAlgorithm
 	{

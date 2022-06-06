@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace PermutationCryptanalysis.Machine
+namespace PermutationCryptanalysis.Machines
 {
 	public class ReversedMachine : Machine
 	{

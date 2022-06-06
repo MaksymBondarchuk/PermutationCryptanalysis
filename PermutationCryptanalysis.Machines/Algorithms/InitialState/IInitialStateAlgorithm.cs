@@ -1,4 +1,4 @@
-namespace PermutationCryptanalysis.Machine.Algorithms.InitialState
+namespace PermutationCryptanalysis.Machines.Algorithms.InitialState
 {
 	public interface IInitialStateAlgorithm
 	{

@@ -1,11 +1,10 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
-using PermutationCryptanalysis.Machine.Algorithms.InitialState;
-using PermutationCryptanalysis.Machine.Algorithms.Outputs;
-using PermutationCryptanalysis.Machine.Algorithms.States;
-using PermutationCryptanalysis.Machine.Interfaces;
+using PermutationCryptanalysis.Machines.Algorithms.InitialState;
+using PermutationCryptanalysis.Machines.Algorithms.Outputs;
+using PermutationCryptanalysis.Machines.Algorithms.States;
+using PermutationCryptanalysis.Machines.Interfaces;
 
-namespace PermutationCryptanalysis.Machine
+namespace PermutationCryptanalysis.Machines
 {
 	public class Machine: IInitialResettableMachine
 	{
@@ -113,101 +112,12 @@ namespace PermutationCryptanalysis.Machine
 
 		#endregion
 
-		#region Bijectivness
-
-		public bool IsBijective(int messageSizeFrom, int messageSizeTo)
-		{
-			for (int messageSize = messageSizeFrom; messageSize <= messageSizeTo; messageSize++)
-			{
-				var outputs = new List<List<int>>();
-
-				List<int> inputs = GenerateFirstMessage(messageSize);
-				Reset();
-				while (CanBeIncremented(inputs))
-				{
-					List<int> current = Transform(inputs).ToList();
-
-					if (outputs.Any(output => current.SequenceEqual(output)))
-					{
-						return false;
-					}
-
-					outputs.Add(current);
-					IncrementMessage(inputs);
-					Reset();
-				}
-			}
-
-			return true;
-		}
-
-		private List<int> GenerateFirstMessage(int messageSize)
-		{
-			var inputs = new List<int>();
-			for (var i = 0; i < messageSize; i++)
-			{
-				inputs.Add(0);
-			}
-
-			return inputs;
-		}
-
-		private bool CanBeIncremented(List<int> inputs)
-		{
-			return inputs.All(x => x < N);
-		}
-
-		private void IncrementMessage(List<int> inputs)
-		{
-			inputs[^1]++;
-			for (int i = inputs.Count - 1; 0 < i; i--)
-			{
-				if (inputs[i] == N)
-				{
-					inputs[i] = 0;
-					inputs[i - 1]++;
-				}
-			}
-		}
-
-		#endregion
-
-		#region Equivalence
-
-		public bool IsEquivalentTo(IResettableMachine other, int messageSizeFrom, int messageSizeTo)
-		{
-			for (int messageSize = messageSizeFrom; messageSize <= messageSizeTo; messageSize++)
-			{
-				List<int> inputs = GenerateFirstMessage(messageSize);
-				Reset();
-				other.Reset();
-				while (CanBeIncremented(inputs))
-				{
-					List<int> thisOutput = Transform(inputs).ToList();
-					List<int> otherOutput = other.Transform(inputs).ToList();
-
-					if (!thisOutput.SequenceEqual(otherOutput))
-					{
-						return false;
-					}
-
-					IncrementMessage(inputs);
-					Reset();
-					other.Reset();
-				}
-			}
-
-			return true;
-		}
-
-		#endregion
-
-		private int GetState(int state, int input)
+		public int GetState(int state, int input)
 		{
 			return StateMatrix[state][input];
 		}
 
-		private int GetOutput(int state, int input)
+		public int GetOutput(int state, int input)
 		{
 			return OutputMatrix[state][input];
 		}

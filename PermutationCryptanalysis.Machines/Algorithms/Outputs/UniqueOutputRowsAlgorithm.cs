@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace PermutationCryptanalysis.Machine.Algorithms.Outputs
+namespace PermutationCryptanalysis.Machines.Algorithms.Outputs
 {
 	public class UniqueOutputRowsAlgorithm : IOutputMatrixAlgorithm
 	{

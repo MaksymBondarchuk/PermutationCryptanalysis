@@ -1,10 +1,12 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using PermutationCryptanalysis.Machine.Algorithms.InitialState;
-using PermutationCryptanalysis.Machine.Algorithms.Outputs;
-using PermutationCryptanalysis.Machine.Algorithms.States;
-using PermutationCryptanalysis.Machine.Extensions;
+using PermutationCryptanalysis.Helpers;
+using PermutationCryptanalysis.Machines;
+using PermutationCryptanalysis.Machines.Algorithms.InitialState;
+using PermutationCryptanalysis.Machines.Algorithms.Outputs;
+using PermutationCryptanalysis.Machines.Algorithms.States;
+using PermutationCryptanalysis.Machines.Extensions;
 
 namespace PermutationCryptanalysis
 {
@@ -12,13 +14,13 @@ namespace PermutationCryptanalysis
 	{
 		public void Run(int m, int n, bool articleMode)
 		{
-			var machine = new Machine.Machine(new RandomInitialStateAlgorithm(), new UniqueOutputRowsAlgorithm(), new ConnectedGraphStateAlgorithm(), m, n);
+			var machine = new Machine(new RandomInitialStateAlgorithm(), new UniqueOutputRowsAlgorithm(), new ConnectedGraphStateAlgorithm(), m, n);
 			machine.WriteMachine();
 
 			List<List<int>> outputTable = HackOutputTable(machine, m, n);
 		}
 
-		private List<List<int>> HackOutputTable(Machine.Machine machine, int m, int n)
+		private List<List<int>> HackOutputTable(Machine machine, int m, int n)
 		{
 			var outputTable = new List<List<int>>();
 			for (var i = 0; i < m; i++)
@@ -38,7 +40,7 @@ namespace PermutationCryptanalysis
 			return outputTable;
 		}
 
-		private void HackOutputTableColumn(Machine.Machine machine, int m, int n, int columnIndex)
+		private void HackOutputTableColumn(Machine machine, int m, int n, int columnIndex)
 		{
 			var column = new List<int>(2 * m);
 			for (var i = 0; i < 2 * m; i++)

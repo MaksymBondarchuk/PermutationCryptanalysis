@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace PermutationCryptanalysis.Machine.Extensions
+namespace PermutationCryptanalysis.Machines.Extensions
 {
 	public static class CollectionExtensions
 	{

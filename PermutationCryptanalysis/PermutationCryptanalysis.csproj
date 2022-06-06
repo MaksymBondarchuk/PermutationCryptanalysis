@@ -2,13 +2,14 @@
 
     <PropertyGroup>
         <OutputType>Exe</OutputType>
-        <TargetFramework>net5.0</TargetFramework>
-        <LangVersion>9</LangVersion>
+        <TargetFramework>net6.0</TargetFramework>
+        <LangVersion>default</LangVersion>
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\PermutationCryptanalysis.Machine\PermutationCryptanalysis.Machine.csproj" />
+      <ProjectReference Include="..\PermutationCryptanalysis.Helpers\PermutationCryptanalysis.Helpers.csproj" />
+      <ProjectReference Include="..\PermutationCryptanalysis.Machines\PermutationCryptanalysis.Machines.csproj" />
     </ItemGroup>
 
 </Project>
