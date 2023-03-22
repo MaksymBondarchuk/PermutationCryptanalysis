@@ -20,7 +20,7 @@ public class Tests
 	public bool Test_Machine_is_Bijective(int m, int n, int messageSizeFrom, int messageSizeTo)
 	{
 		// Assume
-		var machine = new Machine(new RandomInitialStateAlgorithm(), new RandomOutputAlgorithm(), new UniqueStateColumnsAlgorithm(), m, n);
+		var machine = new Machine(new RandomInitialStateAlgorithm(), new RandomNonRepeatingRowsOutputAlgorithm(), new UniqueStateColumnsAlgorithm(), m, n);
 
 		// Act
 		return machine.IsBijective(messageSizeFrom, messageSizeTo);
@@ -33,7 +33,7 @@ public class Tests
 	public bool Test_DoubledMachine_is_Bijective(int m, int n, int messageSizeFrom, int messageSizeTo)
 	{
 		// Assume
-		var machine = new DoubledMachine(new RandomInitialStateAlgorithm(), new RandomOutputAlgorithm(), new UniqueStateColumnsAlgorithm(), m, n);
+		var machine = new DoubledMachine(new RandomInitialStateAlgorithm(), new RandomNonRepeatingRowsOutputAlgorithm(), new UniqueStateColumnsAlgorithm(), m, n);
 
 		// Act
 		return machine.IsBijective(messageSizeFrom, messageSizeTo);

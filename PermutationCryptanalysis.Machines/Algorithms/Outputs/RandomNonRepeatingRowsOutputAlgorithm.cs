@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace PermutationCryptanalysis.Machines.Algorithms.Outputs
 {
-	public class RandomOutputAlgorithm : IOutputMatrixAlgorithm
+	public class RandomNonRepeatingRowsOutputAlgorithm : IOutputMatrixAlgorithm
 	{
 		private readonly Random _random = new();
 
