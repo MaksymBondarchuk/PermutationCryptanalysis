@@ -1,4 +1,13 @@
-﻿namespace PermutationCryptanalysis
+﻿using System;
+using PermutationCryptanalysis.Article1;
+using PermutationCryptanalysis.Article3;
+using PermutationCryptanalysis.Helpers;
+using PermutationCryptanalysis.Machines;
+using PermutationCryptanalysis.Machines.Algorithms.InitialState;
+using PermutationCryptanalysis.Machines.Algorithms.Outputs;
+using PermutationCryptanalysis.Machines.Algorithms.States;
+
+namespace PermutationCryptanalysis
 {
 	internal static class Program
 	{
@@ -8,22 +17,25 @@
 
 		private static void Main()
 		{
-			// var machine = new Machine.Machine(new UniqueOutputRowsAlgorithm(), m: M, n: N);
-			// Console.WriteLine(machine.InitialState);
-			// machine.OutputStateMatrix(ArticleMode);
-			// Console.WriteLine("---------------------------");
-			// machine.OutputOutputMatrix(ArticleMode);
-			// Console.WriteLine(machine.IsBijective(4, 4));
+			// Article #1 (reversed machine)
+			// Article1Helper.BuildReverseMachines();
+
+			// Article #3 (direct machine)
+			// Article3Helper.BuildDirectMachines();
+
+			// Article #3 (reversed machine)
+			Article3Helper.BuildReverseMachines();
 
 			// {
 			// 	var test = new InitialResettableTest();
 			// 	test.Run(M, N);
 			// }
-			
-			{
-				var test = new NonInitialResettableTest();
-				test.Run(M, N);
-			}
+
+			// {
+			// 	// Article #2
+			// 	var test = new NonInitialResettableTest();
+			// 	test.Run(M, N);
+			// }
 
 			// var inputs = new List<int> {0, 1, 2, 3};
 			// List<int>? outputsDirect = machine.Transform(inputs).ToList();
