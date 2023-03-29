@@ -10,6 +10,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PermutationCryptanalysis.He
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PermutationCryptanalysis.Tests", "PermutationCryptanalysis.Tests\PermutationCryptanalysis.Tests.csproj", "{37DD5E17-359E-4D08-997D-FCC9DE6A9CE3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PermutationCryptanalysis.RealSpeedTests", "PermutationCryptanalysis.RealSpeedTests\PermutationCryptanalysis.RealSpeedTests.csproj", "{5698C731-DB21-4D60-94F7-23BCAAC72D22}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -36,5 +38,9 @@ Global
 		{37DD5E17-359E-4D08-997D-FCC9DE6A9CE3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{37DD5E17-359E-4D08-997D-FCC9DE6A9CE3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{37DD5E17-359E-4D08-997D-FCC9DE6A9CE3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5698C731-DB21-4D60-94F7-23BCAAC72D22}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5698C731-DB21-4D60-94F7-23BCAAC72D22}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5698C731-DB21-4D60-94F7-23BCAAC72D22}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5698C731-DB21-4D60-94F7-23BCAAC72D22}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

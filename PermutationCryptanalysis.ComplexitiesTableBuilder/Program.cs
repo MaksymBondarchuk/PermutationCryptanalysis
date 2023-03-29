@@ -57,7 +57,7 @@ namespace PermutationCryptanalysis.ComplexitiesTableBuilder
 			}
 
 			await File.WriteAllTextAsync("Table3.csv", sb.ToString());
-			Console.WriteLine($"Results written to Table3.csv");
+			Console.WriteLine("Results written to Table3.csv");
 		}
 	}
 }

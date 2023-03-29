@@ -16,7 +16,7 @@ public class DoubledMachine : IResettableMachine
 
 	private readonly Machine _machine1;
 	private readonly Machine _machine2;
-	
+
 	public int M { get; }
 
 	public int N { get; }
@@ -32,7 +32,24 @@ public class DoubledMachine : IResettableMachine
 	{
 		_machine1 = new Machine(initialStateAlgorithm, outputMatrixAlgorithm, stateMatrixAlgorithm, m, n);
 		_machine2 = new Machine(initialStateAlgorithm, outputMatrixAlgorithm, stateMatrixAlgorithm, m, n);
-		
+
+		M = m;
+		N = n;
+	}
+
+	public DoubledMachine(
+		IInitialStateAlgorithm initialStateAlgorithm1,
+		IOutputMatrixAlgorithm outputMatrixAlgorithm1,
+		IStateMatrixAlgorithm stateMatrixAlgorithm1,
+		IInitialStateAlgorithm initialStateAlgorithm2,
+		IOutputMatrixAlgorithm outputMatrixAlgorithm2,
+		IStateMatrixAlgorithm stateMatrixAlgorithm2,
+		int m,
+		int n)
+	{
+		_machine1 = new Machine(initialStateAlgorithm1, outputMatrixAlgorithm1, stateMatrixAlgorithm1, m, n);
+		_machine2 = new Machine(initialStateAlgorithm2, outputMatrixAlgorithm2, stateMatrixAlgorithm2, m, n);
+
 		M = m;
 		N = n;
 	}

@@ -30,6 +30,19 @@ public class Tests
 	[TestCase(4, 6, 4, 4, ExpectedResult = true)]
 	[TestCase(6, 4, 4, 4, ExpectedResult = true)]
 	[TestCase(8, 8, 4, 4, ExpectedResult = true)]
+	public bool Test_Random_States_Machine_is_Bijective(int m, int n, int messageSizeFrom, int messageSizeTo)
+	{
+		// Assume
+		var machine = new Machine(new RandomInitialStateAlgorithm(), new RandomNonRepeatingRowsOutputAlgorithm(), new RandomStateAlgorithm(), m, n);
+
+		// Act
+		return machine.IsBijective(messageSizeFrom, messageSizeTo);
+	}
+
+	[TestCase(4, 4, 4, 4, ExpectedResult = true)]
+	[TestCase(4, 6, 4, 4, ExpectedResult = true)]
+	[TestCase(6, 4, 4, 4, ExpectedResult = true)]
+	[TestCase(8, 8, 4, 4, ExpectedResult = true)]
 	public bool Test_DoubledMachine_is_Bijective(int m, int n, int messageSizeFrom, int messageSizeTo)
 	{
 		// Assume
