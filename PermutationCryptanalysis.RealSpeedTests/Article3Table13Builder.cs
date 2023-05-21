@@ -6,6 +6,7 @@ using PermutationCryptanalysis.Machines.Algorithms.States;
 
 namespace PermutationCryptanalysis.RealSpeedTests;
 
+// Час та швидкість перетворення за допомогою програмної реалізації підстановки - now table 12
 public static class Article3Table13Builder
 {
 	public static async Task Build()
