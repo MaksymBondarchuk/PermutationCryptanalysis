@@ -7,6 +7,7 @@ using PermutationCryptanalysis.Machines.Extensions;
 
 namespace PermutationCryptanalysis.Machines.Algorithms.States
 {
+	// Алгоритм генерування таблиці переходів як таблиці зв’язаного пронумерованого однонаправленого графа 
 	public class ConnectedGraphStateAlgorithm : IStateMatrixAlgorithm
 	{
 		#region Setup

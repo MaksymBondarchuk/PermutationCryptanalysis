@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 namespace PermutationCryptanalysis.Machines.Algorithms.Outputs
 {
+	// Алгоритм генерування таблиці виходів так, щоб кожен рядок містив лише унікальні значення
 	public class RandomNonRepeatingRowsOutputAlgorithm : IOutputMatrixAlgorithm
 	{
 		private readonly Random _random = new();
