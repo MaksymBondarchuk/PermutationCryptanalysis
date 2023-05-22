@@ -63,15 +63,15 @@ public class DoubledMachine : IResettableMachine
 		// todo: Питання: чи ок, що щоразу після перетворення вхідного повідомлення скидаємо стани в початкові?
 		var outputs = new List<int>();
 
-		var stack = new Stack<int>();
+		var firstLevelOutputs = new Stack<int>();
 		foreach (int input in inputs)
 		{
-			stack.Push(_machine1.Transform(input));
+			firstLevelOutputs.Push(_machine1.Transform(input));
 		}
 
-		while (stack.Any())
+		while (firstLevelOutputs.Any())
 		{
-			int input = stack.Pop();
+			int input = firstLevelOutputs.Pop();
 			outputs.Add(_machine2.Transform(input));
 		}
 

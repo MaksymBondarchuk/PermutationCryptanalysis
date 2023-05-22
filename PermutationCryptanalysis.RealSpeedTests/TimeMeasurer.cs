@@ -5,7 +5,7 @@ namespace PermutationCryptanalysis.RealSpeedTests;
 
 public static class TimeMeasurer
 {
-	public static TimeSpan Measure(IMachine machine, byte[] message, long transformSameMessageTimes)
+	public static TimeSpan Measure(IMachine machine, int[] message, long transformSameMessageTimes)
 	{
 		Stopwatch stopwatch = new();
 		stopwatch.Start();
@@ -18,10 +18,12 @@ public static class TimeMeasurer
 				// Console.WriteLine($"Progress: {(i + 1) / onePercentSize}%. Elapsed: {stopwatch.Elapsed}");
 			// }
 
-			foreach (byte x in message)
-			{
-				machine.Transform(x);
-			}
+			// foreach (byte x in message)
+			// {
+				// machine.Transform(x);
+			// }
+			
+			machine.Transform(message);
 		}
 
 		stopwatch.Stop();

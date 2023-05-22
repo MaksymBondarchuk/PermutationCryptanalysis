@@ -43,7 +43,7 @@ public static class Article3Table13Builder
 
 		var resultRows = new List<string>{"r pow;r;T1;V1;T3;V3"};
 		Console.WriteLine(resultRows[0]);
-		byte[] message = MessageGenerator.Generate(1000);
+		int[] message = MessageGenerator.GenerateAsInts(1000);
 		foreach (long r in rValues)
 		{
 			TimeSpan article1Time = TimeMeasurer.Measure(article1Machine, message, r / 1000);
